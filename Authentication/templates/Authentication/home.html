@@ -2,11 +2,20 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+
+Welcome to familiar<br><br>
+
+<a href="logedin/">Start</a>
+
+{% else %}
 Welcome to familiar<br><br>
 
 Would you like to:<br>
 <a href="login/">Login</a>
 <a href="creatuser/">Create account</a>
+
+{% endif %}
 
 
 {% endblock %}
