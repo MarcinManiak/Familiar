@@ -5,6 +5,8 @@ from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Family, Member
 from .forms import CreateFamily
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def Home(request):
@@ -36,6 +38,7 @@ def Loginuser(request):
         error = 'Wrong username or password. Please try again.'
         return render(request, 'Authentication/loginuser.html', {'form': AuthenticationForm(), 'error':error})
 
+@login_required
 def Logedin(request):
     families = Family.objects.filter()
     my_families = [] # ffamilies that I belong to
@@ -47,18 +50,23 @@ def Logedin(request):
     return render(request, 'Authentication/logedin.html', {'families': families,'my_families':my_families})
 
 
+@login_required
 def Logoutuser(request):
     if request.method == 'POST':
         logout(request)
         return redirect('home')
 
+@login_required
 def Createfamily(request):
     if request.method == 'GET':
         return render(request, 'Authentication/createfamily.html', {'form': CreateFamily()})
     elif request.method == 'POST':
         member = request.user.username
-        new_member = Member(member=member)
-        new_member.save()
+        try:
+            new_member = get_object_or_404(Member, member=member)
+        except:
+            new_member = Member(member=member)
+            new_member.save()
 
         name = request.POST['name']
         description = request.POST['description']
@@ -70,6 +78,21 @@ def Createfamily(request):
 
         return redirect('logedin')
 
+@login_required
 def Joinfamily(request):
     if request.method == 'GET':
         return render(request, 'Authentication/joinfamily.html')
+    elif request.method == 'POST':
+        member = request.user.username
+        try:
+            new_member = get_object_or_404(Member, member=member)
+        except:
+            new_member = Member(member=member)
+            new_member.save()
+
+        pk = request.POST['family_id']
+        family = get_object_or_404(Family, pk=pk)
+        family.members.add(new_member)
+        family.save()
+
+        return redirect('logedin')

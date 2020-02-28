@@ -2,6 +2,11 @@
 
 {% block content %}
 
-Join family
-
+Please inser ID of family you want to join!
+<form method="POST">
+    {% csrf_token %}
+    <label for="join">Family ID:</label><br>
+    <input type="text" id="join" name="family_id"><br>
+    <button type="submit">Join!</button>
+</form>
 {% endblock %}

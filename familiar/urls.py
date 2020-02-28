@@ -38,7 +38,7 @@ urlpatterns = [
     #Logout
     path('logoutuser/', Logoutuser, name='logoutuser'),
     # Create Family
-    path('createfamily/', Createfamily, name='createfamily'),
+    path('logedin/createfamily/', Createfamily, name='createfamily'),
     # Join Family
-    path('joinfamily/', Joinfamily, name='joinfamily'),
+    path('logedin/joinfamily/', Joinfamily, name='joinfamily'),
 ]
