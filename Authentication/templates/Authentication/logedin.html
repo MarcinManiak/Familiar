@@ -1,0 +1,31 @@
+{% extends 'Authentication/base.html' %}
+
+{% block content %}
+
+
+{% if user.is_authenticated %}
+
+    <form action="{% url 'logoutuser' %}" method="POST">
+        {% csrf_token %}
+        Logged in as {{ user.username }}
+        <button type="submit"> Logout </button>
+    </form>
+    <br>
+
+    {% if not my_families%}
+        Now it is time to create or join family! <br>
+        <a href="{% url 'createfamily'%}">Create new family</a><br>
+        <a href="{% url 'joinfamily'%}">Join existing family</a><br>
+
+    {% endif %}
+
+
+{% else %}
+
+    You have to be <a href="{% url 'loginuser' %}">logged</a> to visit this site! <br>
+    <a href="{% url 'createuser' %}">Create an account </a> <br>
+    <a href="{% url 'home' %}">Go to home page</a>
+
+{% endif %}
+
+{% endblock %}
