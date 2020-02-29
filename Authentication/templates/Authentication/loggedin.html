@@ -1,0 +1,41 @@
+{% extends 'Authentication/base.html' %}
+
+
+{% block content %}
+
+<ul class="nav nav-pills nav-justified">
+  <li class="nav-item">
+    <a class="nav-link active">Logged in as {{ user.username }}</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Families</a>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'myfamilies'%}">My families</a>
+      <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'createfamily'%}">Create new family</a>
+        <a class="dropdown-item" href="{% url 'joinfamily'%}">Join existing family</a>
+    </div>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link">
+        <form action="{% url 'logoutuser' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-block">Logout</button>
+        </form>
+    </a>
+  </li>
+</ul>
+
+
+{% if not my_families%}
+    Now it is time to create or join family! <br>
+    <a href="{% url 'createfamily'%}">Create new family</a><br>
+    <a href="{% url 'joinfamily'%}">Join existing family</a><br>
+
+{% else %}
+
+
+
+{% endif %}
+
+{% endblock %}

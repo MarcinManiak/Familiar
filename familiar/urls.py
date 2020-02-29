@@ -22,6 +22,8 @@ from Authentication.views import Logedin
 from Authentication.views import Logoutuser
 from Authentication.views import Createfamily
 from Authentication.views import Joinfamily
+from Authentication.views import Myfamilies
+from Authentication.views import Profile
 
 urlpatterns = [
     #Admin
@@ -34,11 +36,15 @@ urlpatterns = [
     #Login
     path('login/', Loginuser, name='loginuser'),
     #Logedin
-    path('logedin/', Logedin, name='logedin'),
+    path('loggedin/', Logedin, name='logedin'),
     #Logout
     path('logoutuser/', Logoutuser, name='logoutuser'),
     # Create Family
-    path('logedin/createfamily/', Createfamily, name='createfamily'),
+    path('loggedin/createfamily/', Createfamily, name='createfamily'),
     # Join Family
-    path('logedin/joinfamily/', Joinfamily, name='joinfamily'),
+    path('loggedin/joinfamily/', Joinfamily, name='joinfamily'),
+    # My families
+    path('loggedin/myfamilies/', Myfamilies, name='myfamilies'),
+    # Profiles
+    path('loggedin/profile/<str:profile_name>', Profile, name='profile'),
 ]

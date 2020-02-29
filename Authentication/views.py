@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .forms import SignUpForm
 from django.contrib.auth.forms import AuthenticationForm
@@ -7,6 +8,9 @@ from .models import Family, Member
 from .forms import CreateFamily
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import Permission
+
+
 
 # Create your views here.
 def Home(request):
@@ -20,6 +24,8 @@ def Createuser(request):
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             user = authenticate(username=username, password=raw_password)
+            permission = Permission.objects.get(name='Can view user')
+            user.user_permissions.add(permission)
             login(request, user)
             return redirect('logedin')
     else:
@@ -41,13 +47,12 @@ def Loginuser(request):
 @login_required
 def Logedin(request):
     families = Family.objects.filter()
-    my_families = [] # ffamilies that I belong to
+    my_families = [] # families that I belong to
     for family in families:
         for member in family.members.all():
             if str(member) == str(request.user.username):
                 my_families.append(family)
-
-    return render(request, 'Authentication/logedin.html', {'families': families,'my_families':my_families})
+    return render(request, 'Authentication/loggedin.html',{'my_families':my_families})
 
 
 @login_required
@@ -96,3 +101,31 @@ def Joinfamily(request):
         family.save()
 
         return redirect('logedin')
+
+@login_required
+def Myfamilies(request):
+    if request.method=='GET':
+        families = Family.objects.filter()
+        my_families = [] # families that I belong to
+        number_of_families = 0 #Number of families user belongs
+        for family in families:
+            for member in family.members.all():
+                if str(member) == str(request.user.username):
+                    my_families.append(family)
+        number_of_families = len(my_families)
+        return render(request, 'Authentication/myfamilies.html', {'my_families':my_families,'number_of_families':number_of_families})
+    elif request.method == 'POST':
+        member = request.user.username
+        new_member = get_object_or_404(Member, member=member)
+
+        family_id = request.POST['family_id']
+        family = get_object_or_404(Family, pk=family_id)
+        family.members.remove(new_member)
+        family.save()
+
+        return redirect('logedin')
+
+@login_required
+def Profile(request, profile_name):
+    profile = get_object_or_404(User, username=profile_name)
+    return render(request, 'Authentication/profile.html', {'profile':profile})
