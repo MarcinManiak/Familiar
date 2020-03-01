@@ -1,0 +1,14 @@
+{% for my_event in my_events %}
+
+    <div>
+        <h2>{{ my_event.occasion }}</h2>
+        <p>{{ my_event.desc }}</p>
+        <h4>Date: {{ my_event.day }}.{{ my_event.month }}</h4>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="event_id" value="{{ my_event.pk }}" ><br>
+            <button type="submit">Delete!</button>
+        </form>
+    </div>
+
+{% endfor %}

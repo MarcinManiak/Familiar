@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from Authentication.views import Home
 from Authentication.views import Createuser
 from Authentication.views import Loginuser
@@ -24,6 +24,7 @@ from Authentication.views import Createfamily
 from Authentication.views import Joinfamily
 from Authentication.views import Myfamilies
 from Authentication.views import Profile
+
 
 urlpatterns = [
     #Admin
@@ -47,4 +48,6 @@ urlpatterns = [
     path('loggedin/myfamilies/', Myfamilies, name='myfamilies'),
     # Profiles
     path('loggedin/profile/<str:profile_name>', Profile, name='profile'),
+    ## CREATE EVENT
+    path('main/', include('logged.urls')),
 ]

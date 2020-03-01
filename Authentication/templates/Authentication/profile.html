@@ -3,4 +3,4 @@ You are on {{profile}} profile <br>
 Information:<br>
 Name: {{ profile.first_name }} {{ profile.last_name }} <br>
 Email: {{ profile.email }} <br>
-Joined: {{ profile.date_joined }}
+Joined: {{ profile.date_joined | date:"j.m.Y" }}

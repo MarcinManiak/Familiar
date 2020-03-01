@@ -9,20 +9,28 @@
   </li>
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Families</a>
-    <div class="dropdown-menu">
-        <a class="dropdown-item" href="{% url 'myfamilies'%}">My families</a>
-      <div class="dropdown-divider"></div>
+      <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'myfamilies'%}">My families</a>
+          <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="{% url 'createfamily'%}">Create new family</a>
         <a class="dropdown-item" href="{% url 'joinfamily'%}">Join existing family</a>
     </div>
   </li>
+
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Events</a>
+      <div class="dropdown-menu">
+          <a class="dropdown-item" href="{% url 'addevent'%}">Add event!</a>
+          <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="{% url 'myevents'%}">My events</a>
+    </div>
+  </li>
+
   <li class="nav-item">
-    <a class="nav-link">
-        <form action="{% url 'logoutuser' %}" method="POST">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary btn-block">Logout</button>
-        </form>
-    </a>
+    <form action="{% url 'logoutuser' %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary btn-block">Logout</button>
+    </form>
   </li>
 </ul>
 
@@ -33,6 +41,20 @@
     <a href="{% url 'joinfamily'%}">Join existing family</a><br>
 
 {% else %}
+
+<!--EVENTS-->
+<div>
+    <h3>Events in your family</h3><br>
+    {% for event in events_in_my_families %}
+    <div>
+        <h4>Author: {{ event.author }}</h4>
+        <h3> {{ event.occasion }}</h3>
+        <p>{{ event.desc }}</p>
+        <h4>Date: {{ event.day }}.{{ event.month }}</h4>
+    </div><br><br>
+    {% endfor %}
+</div>
+
 
 
 

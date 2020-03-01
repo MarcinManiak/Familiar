@@ -9,6 +9,7 @@ from .forms import CreateFamily
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Permission
+from logged.models import Event
 
 
 
@@ -48,11 +49,26 @@ def Loginuser(request):
 def Logedin(request):
     families = Family.objects.filter()
     my_families = [] # families that I belong to
+    events = Event.objects.all()# all database events
+    members_of_my_families = []
+    events_in_my_families = []
+
     for family in families:
         for member in family.members.all():
             if str(member) == str(request.user.username):
                 my_families.append(family)
-    return render(request, 'Authentication/loggedin.html',{'my_families':my_families})
+
+    for family in my_families:
+        for member in family.members.all():
+            members_of_my_families.append(member.member)
+
+    members_of_my_families = list(dict.fromkeys(members_of_my_families))
+
+    for event in events:
+        if event.author in members_of_my_families:
+            events_in_my_families.append(event)
+
+    return render(request, 'Authentication/loggedin.html',{'my_families':my_families, 'events_in_my_families':events_in_my_families, 'members_of_my_families':members_of_my_families})
 
 
 @login_required
