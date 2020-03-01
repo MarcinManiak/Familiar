@@ -10,3 +10,20 @@ class Event(models.Model):
 
     def __str__(self):
         return self.occasion+' '+self.author
+
+class Post(models.Model):
+    author = models.CharField(max_length=256, default='None')
+    text = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text+' '+self.author
+
+class Comment(models.Model):
+    author = models.CharField(max_length=256, default='None')
+    comment = models.TextField()
+    date = models.DateTimeField(auto_now=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.post+'-----'+self.comment

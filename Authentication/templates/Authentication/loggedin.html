@@ -55,6 +55,33 @@
     {% endfor %}
 </div>
 
+<!--POST-->
+<dvi>
+<!--    CREATE POST-->
+    <div>
+        <form method="POST">
+            {% csrf_token %}
+           <label for="send_post">Send post visible to all member of your families!</label><br>
+           <textarea name='send_post' id='send_post' rows="3" cols="50"></textarea><br>
+           <button type="submit">Post!</button>
+        </form>
+    </div>
+
+<!--    VIEW POSTS-->
+    <div>
+        {% if posts_in_my_families %}
+            {% for post in posts_in_my_families %}
+                <div>
+                    <h3>{{ post.author }}</h3>
+                    <p>{{ post.text }}</p>
+                    <h6>{{ post.date }}</h6>
+                </div>
+
+            {% endfor %}
+        {% endif %}
+    </div>
+
+</dvi>
 
 
 

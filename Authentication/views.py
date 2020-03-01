@@ -9,7 +9,7 @@ from .forms import CreateFamily
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Permission
-from logged.models import Event
+from logged.models import Event, Post
 
 
 
@@ -47,29 +47,48 @@ def Loginuser(request):
 
 @login_required
 def Logedin(request):
-    families = Family.objects.filter()
-    my_families = [] # families that I belong to
-    events = Event.objects.all()# all database events
-    members_of_my_families = []
-    events_in_my_families = []
+    if request.method == 'GET':
+        families = Family.objects.filter()
+        my_families = [] # families that I belong to
+        events = Event.objects.all()# all database events
+        members_of_my_families = []
+        events_in_my_families = []
 
-    for family in families:
-        for member in family.members.all():
-            if str(member) == str(request.user.username):
-                my_families.append(family)
+        for family in families:
+            for member in family.members.all():
+                if str(member) == str(request.user.username):
+                    my_families.append(family)
 
-    for family in my_families:
-        for member in family.members.all():
-            members_of_my_families.append(member.member)
+        for family in my_families:
+            for member in family.members.all():
+                members_of_my_families.append(member.member)
 
-    members_of_my_families = list(dict.fromkeys(members_of_my_families))
+        members_of_my_families = list(dict.fromkeys(members_of_my_families))
 
-    for event in events:
-        if event.author in members_of_my_families:
-            events_in_my_families.append(event)
+        for event in events:
+            if event.author in members_of_my_families:
+                events_in_my_families.append(event)
 
-    return render(request, 'Authentication/loggedin.html',{'my_families':my_families, 'events_in_my_families':events_in_my_families, 'members_of_my_families':members_of_my_families})
+        events_in_my_families = list(dict.fromkeys(events_in_my_families))
 
+        posts = Post.objects.all() #all posts
+        posts_in_my_families = []
+
+        for post in posts:
+            if post.author in members_of_my_families:
+                posts_in_my_families.append(post)
+
+        posts_in_my_families = list(dict.fromkeys(posts_in_my_families))
+
+        return render(request, 'Authentication/loggedin.html',{'my_families':my_families, 'events_in_my_families':events_in_my_families, 'members_of_my_families':members_of_my_families,'posts_in_my_families':posts_in_my_families})
+
+    elif request.method == 'POST':
+        user = request.user.username
+        post = request.POST['send_post']
+        new_post = Post(text=post, author=user)
+        new_post.save()
+
+        return redirect('logedin')
 
 @login_required
 def Logoutuser(request):
