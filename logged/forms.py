@@ -1,11 +1,11 @@
 from django.contrib.auth.models import User
-from .models import Event
+from .models import Photo
 from django.forms import ModelForm
 from django import forms
 
-# class AddeventForm(ModelForm):
-#     date = forms.DateField(help_text='Use format ')
-#
-#     class Meta:
-#         model = Event
-#         fields = ('title','desc', 'date')
+class ImageForm(ModelForm):
+    img = forms.ImageField()
+
+    class Meta:
+        model = Photo
+        fields = ('img',)

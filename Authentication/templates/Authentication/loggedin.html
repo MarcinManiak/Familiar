@@ -7,6 +7,7 @@
   <li class="nav-item">
     <a class="nav-link active">Logged in as {{ user.username }}</a>
   </li>
+<!--    FAMILIES-->
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Families</a>
       <div class="dropdown-menu">
@@ -16,14 +17,18 @@
         <a class="dropdown-item" href="{% url 'joinfamily'%}">Join existing family</a>
     </div>
   </li>
-
+<!--EVENTS-->
   <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Events</a>
       <div class="dropdown-menu">
-          <a class="dropdown-item" href="{% url 'addevent'%}">Add event!</a>
+          <a class="dropdown-item" href="{% url 'myevents'%}">My events</a>
           <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{% url 'myevents'%}">My events</a>
+          <a class="dropdown-item" href="{% url 'addevent'%}">Add event!</a>
     </div>
+  </li>
+<!--    PHOTOS-->
+  <li class="nav-item dropdown">
+    <a class="nav-link" href="{% url 'photos' %}" role="button" aria-haspopup="true" aria-expanded="false">Photos</a>
   </li>
 
   <li class="nav-item">
@@ -39,7 +44,6 @@
     Now it is time to create or join family! <br>
     <a href="{% url 'createfamily'%}">Create new family</a><br>
     <a href="{% url 'joinfamily'%}">Join existing family</a><br>
-
 {% else %}
 
 <!--EVENTS-->
@@ -62,6 +66,7 @@
         <form method="POST">
             {% csrf_token %}
            <label for="send_post">Send post visible to all member of your families!</label><br>
+            <input type="hidden" name="form_type" value="post">
            <textarea name='send_post' id='send_post' rows="3" cols="50"></textarea><br>
            <button type="submit">Post!</button>
         </form>
@@ -75,11 +80,31 @@
                     <h3>{{ post.author }}</h3>
                     <p>{{ post.text }}</p>
                     <h6>{{ post.date }}</h6>
+<!--                            delete post-->
+                            <form method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="form_type" value="delete">
+                               <input name='post_to_delete' value="{{ post.pk }}" type=hidden >
+                               <button type="submit">Delete!</button>
+                            </form>
                 </div>
 
             {% endfor %}
         {% endif %}
     </div>
+
+<!--    PHOTOS-->
+        {% if photos_in_my_families %}
+            {% for photo in photos_in_my_families %}
+                <div>
+                    <h3>{{ photo.author }}</h3>
+                    <p>{{ photo.desc }}</p>
+                     <img src="{{ photo.photo.url }}" alt="photo" width="25%">
+                    <h6>{{ photo.date }}</h6>
+                </div>
+
+            {% endfor %}
+        {% endif %}
 
 </dvi>
 

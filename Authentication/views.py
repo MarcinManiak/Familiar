@@ -9,7 +9,7 @@ from .forms import CreateFamily
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Permission
-from logged.models import Event, Post
+from logged.models import Event, Post, Photo
 
 
 
@@ -80,15 +80,35 @@ def Logedin(request):
 
         posts_in_my_families = list(dict.fromkeys(posts_in_my_families))
 
-        return render(request, 'Authentication/loggedin.html',{'my_families':my_families, 'events_in_my_families':events_in_my_families, 'members_of_my_families':members_of_my_families,'posts_in_my_families':posts_in_my_families})
+        photos = Photo.objects.all()  # all photos
+        photos_in_my_families = []
+
+        for photo in photos:
+            if photo.author in members_of_my_families:
+                photos_in_my_families.append(photo)
+
+        photos_in_my_families = list(dict.fromkeys(photos_in_my_families))
+
+        return render(request, 'Authentication/loggedin.html',{'my_families':my_families, 'events_in_my_families':events_in_my_families, 'members_of_my_families':members_of_my_families,'posts_in_my_families':posts_in_my_families,'photos_in_my_families':photos_in_my_families})
 
     elif request.method == 'POST':
-        user = request.user.username
-        post = request.POST['send_post']
-        new_post = Post(text=post, author=user)
-        new_post.save()
+        if request.POST.get("form_type") == 'post':
+            user = request.user.username
+            post = request.POST['send_post']
+            if post != '':
+                new_post = Post(text=post, author=user)
+                new_post.save()
 
-        return redirect('logedin')
+            return redirect('logedin')
+
+        if request.POST.get("form_type") == 'delete':
+            post_to_delete = get_object_or_404(Post, pk=request.POST['post_to_delete'])
+            if post_to_delete.author == request.user.username:
+                post_to_delete.delete()
+            return redirect('logedin')
+
+
+
 
 @login_required
 def Logoutuser(request):

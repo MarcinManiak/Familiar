@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 from Authentication.views import Home
 from Authentication.views import Createuser
 from Authentication.views import Loginuser
@@ -50,4 +52,8 @@ urlpatterns = [
     path('loggedin/profile/<str:profile_name>', Profile, name='profile'),
     ## CREATE EVENT
     path('main/', include('logged.urls')),
+
 ]
+
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

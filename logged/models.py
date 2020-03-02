@@ -19,11 +19,13 @@ class Post(models.Model):
     def __str__(self):
         return self.text+' '+self.author
 
-class Comment(models.Model):
+
+class Photo(models.Model):
     author = models.CharField(max_length=256, default='None')
-    comment = models.TextField()
+    title = models.CharField(max_length=256, default='None', blank=True, help_text='Title, optional')
+    desc = models.TextField(blank=True, help_text='Description, optional')
     date = models.DateTimeField(auto_now=True)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    photo = models.ImageField(upload_to = './')
 
     def __str__(self):
-        return self.post+'-----'+self.comment
+        return self.title+'-----'+self.author

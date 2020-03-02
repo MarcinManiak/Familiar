@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from Authentication.models import Family, Member
-from .models import Event
+from .models import Event, Photo
+from .forms import ImageForm
 
 @login_required
 def Addevent(request):
@@ -32,4 +32,29 @@ def Myevents(request):
         event_to_delete.delete()
 
         return redirect('logedin')
+
+@login_required
+def Photos(request):
+    if request.method=='GET':
+        user = request.user.username
+        photos = Photo.objects.filter(author=user)
+        return render(request, 'logged/photos.html', {'photos':photos, 'img_form':ImageForm()})
+
+    elif request.method == 'POST':
+        if request.POST.get('form_type') == 'delete_photo':
+            photo_to_delete = get_object_or_404(Photo, pk=request.POST['photo_id'])
+            if photo_to_delete.author == request.user.username:
+                photo_to_delete.delete()
+            return redirect('photos')
+        elif request.POST.get('form_type') == 'add_photo':
+            author = request.user.username
+            title = request.POST['title']
+            desc = request.POST['desc']
+            photo = request.FILES['photo_file']
+
+            new_photo = Photo(author=author, title=title,desc=desc, photo=photo)
+            #zrobić is valid!
+            new_photo.save()
+
+            return redirect('photos')
 

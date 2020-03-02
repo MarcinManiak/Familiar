@@ -1,0 +1,26 @@
+<!--ADD PHOTO-->
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="photo">Add photo:</label><br>
+    <input type="hidden" name="form_type" value="add_photo">
+    <input id="photo" name="title"><br>
+    <textarea name="desc"></textarea><br>
+    <input type="file" name="photo_file"> <br>
+     <button type="submit">Add!</button>
+</form>
+------------------<br><br>
+<!--SHOW MY PHOTOS-->
+{% for photo in photos %}
+ <h4>{{ photo.title }}</h4>
+ <p> {{ photo.desc }}</p>
+ <img src="{{ photo.photo.url }}" alt="photo" width="25%">
+ <h6> {{ photo.date }}</h6><br>
+<!-- DELETE-->
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="form_type" value="delete_photo">
+        <input type="hidden" name="photo_id" value="{{ photo.pk }}" ><br>
+        <button type="submit">Delete!</button>
+    </form>
+----------------
+{% endfor %}
