@@ -11,6 +11,9 @@ class Event(models.Model):
     def __str__(self):
         return self.occasion+' '+self.author
 
+    def sort_date(obj):
+        return obj.this_year
+
 class Post(models.Model):
     author = models.CharField(max_length=256, default='None')
     text = models.TextField()

@@ -1,4 +1,6 @@
 from django.shortcuts import render
+import datetime
+from operator import attrgetter
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -71,6 +73,27 @@ def Logedin(request):
 
         events_in_my_families = list(dict.fromkeys(events_in_my_families))
 
+        for event_in_family in events_in_my_families:
+            if event_in_family.month < datetime.datetime.now().month:
+                event_in_family.this_year = datetime.datetime(datetime.datetime.now().year + 1, event_in_family.month,
+                                                              event_in_family.month)
+            elif event_in_family.month > datetime.datetime.now().month:
+                event_in_family.this_year = datetime.datetime(datetime.datetime.now().year,
+                                                              event_in_family.month,
+                                                              event_in_family.month)
+            else:
+                if event_in_family.day < datetime.datetime.now().day:
+                    event_in_family.this_year = datetime.datetime(datetime.datetime.now().year + 1,
+                                                                  event_in_family.month,
+                                                                  event_in_family.month)
+                else:
+                    event_in_family.this_year = datetime.datetime(datetime.datetime.now().year,
+                                                                  event_in_family.month,
+                                                                  event_in_family.month)
+
+        sorted_events = sorted(events_in_my_families, key=attrgetter('this_year'))
+
+
         posts = Post.objects.all() #all posts
         posts_in_my_families = []
 
@@ -89,7 +112,7 @@ def Logedin(request):
 
         photos_in_my_families = list(dict.fromkeys(photos_in_my_families))
 
-        return render(request, 'Authentication/loggedin.html',{'my_families':my_families, 'events_in_my_families':events_in_my_families, 'members_of_my_families':members_of_my_families,'posts_in_my_families':posts_in_my_families,'photos_in_my_families':photos_in_my_families})
+        return render(request, 'Authentication/loggedin.html',{'my_families':my_families, 'events_in_my_families':sorted_events, 'members_of_my_families':members_of_my_families,'posts_in_my_families':posts_in_my_families,'photos_in_my_families':photos_in_my_families})
 
     elif request.method == 'POST':
         if request.POST.get("form_type") == 'post':
