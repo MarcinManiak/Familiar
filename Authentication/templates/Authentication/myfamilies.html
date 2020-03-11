@@ -1,13 +1,12 @@
 
-You belong to {{ number_of_families }} family/ies:
+<h2>You belong to {{ number_of_families }} family/ies:</h2>
 {% for family in my_families %}
-    <div>
-        <h2>{{ family.name }}</h2>
-        <h3>Family ID: {{ family.pk }}</h3>
+    <div class="container">
+        <h3>{{ family.name }}</h3>
+        <h4 >Family ID: <b>{{ family.pk }}</b></h4>
         <p>{{ family.description }}</p>
         <h4>Members of this family:</h4>
         <ul>
-            <h4>Click for details</h4>
             {% for member in family.members.all %}
             <li>
                <a href="{% url 'profile' member %}">{{ member }}</a>
@@ -17,7 +16,9 @@ You belong to {{ number_of_families }} family/ies:
         <form method="POST">
             {% csrf_token %}
             <input type="hidden" name="family_id" value="{{ family.pk }}" ><br>
-            <button type="submit">Leave this family!</button>
+            <button type="submit" class="waves-effect waves-light btn-large">Leave this family!</button>
         </form>
     </div>
+
 {% endfor %}
+

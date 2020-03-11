@@ -44,7 +44,7 @@ def Loginuser(request):
             login(request, user)
             return redirect('logedin')
     except:
-        error = 'Wrong username or password. Please try again.'
+        error = 'Niepoprawne dane. Spróbuj jeszcze raz!'
         return render(request, 'Authentication/loginuser.html', {'form': AuthenticationForm(), 'error':error})
 
 @login_required

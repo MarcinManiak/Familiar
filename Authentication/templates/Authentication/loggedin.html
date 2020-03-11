@@ -3,61 +3,54 @@
 
 {% block content %}
 
-<ul class="nav nav-pills nav-justified">
-  <li class="nav-item">
-    <a class="nav-link active">Logged in as {{ user.username }}</a>
-  </li>
-<!--    FAMILIES-->
-  <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Families</a>
-      <div class="dropdown-menu">
-          <a class="dropdown-item" href="{% url 'myfamilies'%}">My families</a>
-          <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="{% url 'createfamily'%}">Create new family</a>
-        <a class="dropdown-item" href="{% url 'joinfamily'%}">Join existing family</a>
-    </div>
-  </li>
-<!--EVENTS-->
-  <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Events</a>
-      <div class="dropdown-menu">
-          <a class="dropdown-item" href="{% url 'myevents'%}">My events</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="{% url 'addevent'%}">Add event!</a>
-    </div>
-  </li>
-<!--    PHOTOS-->
-  <li class="nav-item dropdown">
-    <a class="nav-link" href="{% url 'photos' %}" role="button" aria-haspopup="true" aria-expanded="false">Photos</a>
-  </li>
 
+<ul class="nav nav-pills nav-fill">
   <li class="nav-item">
-    <form action="{% url 'logoutuser' %}" method="POST">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary btn-block">Logout</button>
-    </form>
+    <a class="nav-link active">Zalogowany jako: {{ user.username }}</a>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Moje rodziny</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="{% url 'myfamilies'%}">Przeglądaj rodziny</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="{% url 'createfamily'%}">Stwórz rodzinę</a>
+      <a class="dropdown-item" href="{% url 'joinfamily'%}">Dołącz do rodziny</a>
+    </div>
+  </li>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Wydarzenia</a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="{% url 'myevents'%}">Przeglądaj moje wydarzenia</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="{% url 'addevent'%}">Dodaj wydarzenie</a>
+    </div>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'addevent'%}">Zdjęcia</a>
   </li>
 </ul>
 
 
 {% if not my_families%}
-    Now it is time to create or join family! <br>
-    <a href="{% url 'createfamily'%}">Create new family</a><br>
-    <a href="{% url 'joinfamily'%}">Join existing family</a><br>
+<h2>Czas dołączyć do jakiejś rodziny</h2> <br>
+<h4>Stwórz jako pierwszy swoją rodzię lub poproś osobę która zaprosiła Cię do Familiara o ID rodziny do której chciałbyś dołączyć</h4><br><br>
+    <a href="{% url 'createfamily'%}" class="btn btn-primary btn-block">Stwórz rodzinę</a><br>
+    <a href="{% url 'joinfamily'%}" class="btn btn-primary btn-block">Dołącz do istniejące rodziny</a><br>
 {% else %}
 
+
 <!--EVENTS-->
+
+<h3>Nadchodzące wydarzenia:</h3><br>
+
+{% for event in events_in_my_families %}
 <div>
-    <h3>Events in your family</h3><br>
-    {% for event in events_in_my_families %}
-    <div>
-        <h4>Author: {{ event.author }}</h4>
-        <h3> {{ event.occasion }}</h3>
-        <p>{{ event.desc }}</p>
-        <h4>Date: {{ event.day }}.{{ event.month }}</h4>
-    </div><br><br>
-    {% endfor %}
-</div>
+    <h4>Autor: {{ event.author }}</h4>
+    <h3> {{ event.occasion }}</h3>
+    <p>{{ event.desc }}</p>
+    <h4>Data: {{ event.day }}.{{ event.month }}</h4>
+</div><br><br>
+{% endfor %}
 
 <!--POST-->
 <dvi>
@@ -112,4 +105,10 @@
 
 {% endif %}
 
+<form action="{% url 'logoutuser' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-primary btn-block">Logout</button>
+</form>
+
 {% endblock %}
+

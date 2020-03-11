@@ -18,3 +18,4 @@ class CreateFamily(ModelForm):
     class Meta:
         model = Family
         fields = ('name','description')
+

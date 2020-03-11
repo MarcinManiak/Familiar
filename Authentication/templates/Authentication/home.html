@@ -2,20 +2,29 @@
 
 {% block content %}
 
+
 {% if user.is_authenticated %}
 
-Welcome to familiar<br><br>
+<h1>Witaj w Familiar</h1></h1><br><br>
 
-<a href="{% url 'logedin' %}">Start</a>
+<h4>Jesteś już zalogowany jako: {{ user.username }}</h4>
 
+
+<a href="{% url 'logedin' %}" type="button" class="btn btn-outline-primary">Wejdź!</a> <br><br>
+<form action="{% url 'logoutuser' %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-outline-primary">Zmień konto!</button>
+</form>
 {% else %}
-Welcome to familiar<br><br>
 
-Would you like to:<br>
-<a href="login/">Login</a>
-<a href="creatuser/">Create account</a>
+<h1>Witaj w Familiar</h1></h1><br><br>
+
+<h4>Masz już konto?</h4><br>
+<a href="login/" class="btn btn-outline-primary">Zaloguj!</a>
+<a href="creatuser/" class="btn btn-outline-primary">Stwórz konto!</a>
 
 {% endif %}
 
 
 {% endblock %}
+
