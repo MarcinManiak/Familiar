@@ -2,12 +2,13 @@
 
 {% block content %}
 
-Please inser ID of family you want to join!
+<h4>Wpisz ID rodziny do której chcesz dołączyć.</h4>
+<h6>Może udestępnić C to osoba która zaprosiła Cię do Familiara lub o której wiesz, że znajduję się już w rodzinie której częścią jesteś.</h6>
 <form method="POST">
     {% csrf_token %}
-    <label for="join">Family ID:</label><br>
-    <input type="text" id="join" name="family_id"><br>
-    <button type="submit">Join!</button>
+    <label for="join">ID rodziny:</label><br>
+    <input type="text" id="join" name="family_id" class="form-control"><br>
+    <button type="submit" class="btn btn-success">Dołącz!</button>
 </form>
 
 {% endblock %}

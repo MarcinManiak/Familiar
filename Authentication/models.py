@@ -8,8 +8,8 @@ class Member(models.Model):
         return self.member
 
 class Family(models.Model):
-    name = models.CharField(max_length=128, help_text='Name your family')
-    description = models.TextField(blank=True, help_text='Optional - what is amazing about you folks?')
+    name = models.CharField(max_length=128, help_text='Jak nazywa się Waza rodzina')
+    description = models.TextField(blank=True, help_text='Opcjonalne, ale na pewno czym szczególnym się odznaczacie :) ')
     members = models.ManyToManyField(Member)
 
     def __str__(self):

@@ -1,14 +1,38 @@
-{% for my_event in my_events %}
+<!doctype html>
+<html lang="pl">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <div>
-        <h2>{{ my_event.occasion }}</h2>
-        <p>{{ my_event.desc }}</p>
-        <h4>Date: {{ my_event.day }}.{{ my_event.month }}</h4>
-        <form method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="event_id" value="{{ my_event.pk }}" ><br>
-            <button type="submit">Delete!</button>
-        </form>
-    </div>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-{% endfor %}
+    <title>Familiar</title>
+  </head>
+  <body>
+
+    {% load filters %}
+    {% for my_event in my_events %}
+
+        <div>
+            <h2>{{ my_event.occasion }}</h2>
+            <p>{{ my_event.desc }}</p>
+            <h4>{{ my_event.day }} {{my_event.month|month}}</h4>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="event_id" value="{{ my_event.pk }}" ><br>
+                <button type="submit" class="btn btn-outline-danger">Usuń!</button>
+            </form>
+        </div>
+        <br>
+
+    {% endfor %}
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
