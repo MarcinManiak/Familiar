@@ -12,6 +12,8 @@
   </head>
   <body>
 
+<div><a class="btn btn-secondary btn-lg btn-block" href="{% url 'logedin' %}">Strona główna</a></div>
+
 <h2>Jesteś członkiem {{ number_of_families }} rodzin/y:</h2>
 {% for family in my_families %}
     <div class="container">

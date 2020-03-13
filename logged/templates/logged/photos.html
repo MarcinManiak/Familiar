@@ -12,6 +12,8 @@
   </head>
   <body>
 
+<div><a class="btn btn-secondary btn-lg btn-block" href="{% url 'logedin' %}">Strona główna</a></div>
+
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <h3>Dodaj zdjęcie:</h3>
@@ -22,7 +24,7 @@
         <textarea name="desc" class="form-control"></textarea><br>
         <h5>Wybierz zdjęcie:</h5>
         <input type="file" name="photo_file"> <br> <br>
-         <button type="submit" class="btn btn-outline-success">Dodaj!</button>
+         <button type="submit" class="btn btn-outline-success" action="{% url 'photos' %}">Dodaj!</button>
     </form>
 
     <br><br><br>

@@ -11,6 +11,9 @@
     <title>Familiar</title>
   </head>
   <body>
+
+<div><a class="btn btn-secondary btn-lg btn-block" href="{% url 'logedin' %}">Strona główna</a></div>
+
   {% load filters %}
       <form method="post">
       {% csrf_token %}

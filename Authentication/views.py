@@ -94,7 +94,7 @@ def Logedin(request):
         sorted_events = sorted(events_in_my_families, key=attrgetter('this_year'))
 
 
-        posts = Post.objects.all() #all posts
+        posts = Post.objects.all().order_by('-date') #all posts
         posts_in_my_families = []
 
         for post in posts:
@@ -103,7 +103,7 @@ def Logedin(request):
 
         posts_in_my_families = list(dict.fromkeys(posts_in_my_families))
 
-        photos = Photo.objects.all()  # all photos
+        photos = Photo.objects.all().order_by('-date')  # all photos
         photos_in_my_families = []
 
         for photo in photos:
