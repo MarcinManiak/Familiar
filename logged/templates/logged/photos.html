@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="pl">
+  {% load static %}
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -7,16 +8,18 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="{% static 'Authentication/css/style.css' %}" />
     <title>Familiar</title>
   </head>
   <body>
 
 <div><a class="btn btn-secondary btn-lg btn-block" href="{% url 'logedin' %}">Strona główna</a></div>
 
+<br><br>
+<h2>Dodaj zdjęcie:</h2>
+<div class="center-form">
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <h3>Dodaj zdjęcie:</h3>
         <input type="hidden" name="form_type" value="add_photo" class="form-control"><br>
         <h5>Tytuł:</h5>
         <input id="photo" name="title" class="form-control"><br><br>
@@ -26,12 +29,12 @@
         <input type="file" name="photo_file"> <br> <br>
          <button type="submit" class="btn btn-outline-success" action="{% url 'photos' %}">Dodaj!</button>
     </form>
+</div>
 
-    <br><br><br>
+
+<br><br><br>
 
 <h2> Twoje zdjęcia </h2>
-
-
 <div class="row">
     {% for photo in photos %}
     <div class="card col-sm-4" style="width: 18rem;">

@@ -34,10 +34,16 @@
 }
 
 .back-home {
-  background-image: url('./../img/cell.png');
+  width: 100wh;
+  height: 100vh;
+  background-size: cover;
+  text-align: center;
+  padding-top:30vh;
+  background-image: url('./../img/ptaki.jpg');
 }
 
 .back-login {
+
   background-image: url('./../img/ptaki.jpg');
 }
 
