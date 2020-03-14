@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,36 +8,40 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="{% static 'Authentication/css/style.css' %}" />
     <title>Familiar</title>
   </head>
   <body>
 
 <div><a class="btn btn-secondary btn-lg btn-block" href="{% url 'logedin' %}">Strona główna</a></div>
 
+<div class="back-createfamily">
+    <div class="center-form">
   {% load filters %}
-      <form method="post">
-      {% csrf_token %}
-      {% for field in form %}
-        <p>
-        {% if field.name == 'name' %}
-         <h5>Nazwa rodziny:</h5></br>
-        {% else %}
-        <h5>Opis rodziny:</h5></br>
-        {% endif %}
-          {{ field|addclass:"form-control" }}
-        {% if field.help_text %}</br>
-            {% if field.name != 'username' %}
-        <small style="color: grey">{{ field.help_text }}</small></form></br>
+      <form method="POST">
+          {% csrf_token %}
+          {% for field in form %}
+            <p>
+            {% if field.name == 'name' %}
+             <h5>Nazwa rodziny:</h5>
+            {% else %}
+            <h5>Opis rodziny:</h5>
             {% endif %}
-          {% endif %}
-          {% for error in field.errors %}
-            <p style="color: red">{{ error }}</p>
+              {{ field|addclass:"form-control" }}
+            {% if field.help_text %}
+                {% if field.name != 'username' %}
+            <small style="color: grey">{{ field.help_text }}</small></br>
+                {% endif %}
+              {% endif %}
+              {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+              {% endfor %}
+            </p>
           {% endfor %}
-        </p>
-      {% endfor %}
-      <button type="submit" class="btn btn-success">Stwórz!</button>
-      </form>
+            <button type="submit" class="btn btn-outline-primary">Stwórz!</button>
+        </form>
+    </div>
+</div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

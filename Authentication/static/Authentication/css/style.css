@@ -1,4 +1,56 @@
-.test {
-    color: white;
+.back {
+  width: 100wh;
+  height: 100vh;
+  background-size: cover;
+  text-align: center;
+  padding-top:30vh;
 }
 
+.back-register {
+  width: 100wh;
+  height: 100vh;
+  background-size: cover;
+  text-align: center;
+  padding-top:5vh;
+  background-image: url('./../img/cell.png');
+}
+
+.back-createfamily {
+  width: 100wh;
+  height: 100vh;
+  background-size: cover;
+  text-align: center;
+  padding-top:10vh;
+  background-image: url('./../img/cell.png');
+}
+
+.back-joinfamily {
+  width: 100wh;
+  height: 100vh;
+  background-size: cover;
+  text-align: center;
+  padding-top:30vh;
+  background-image: url('./../img/cell.png');
+}
+
+.back-home {
+  background-image: url('./../img/cell.png');
+}
+
+.back-login {
+  background-image: url('./../img/ptaki.jpg');
+}
+
+
+.btn-link {
+ color:black;
+}
+
+.btn-link:hover {
+ color:green;
+}
+
+.center-form {
+ width: 40vw;
+ margin: 0 auto;
+}

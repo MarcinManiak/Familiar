@@ -159,7 +159,7 @@ def Createfamily(request):
         newfamily.save()
         newfamily.members.add(new_member)
 
-        return redirect('logedin')
+        return redirect('myfamilies')
 
 @login_required
 def Joinfamily(request):

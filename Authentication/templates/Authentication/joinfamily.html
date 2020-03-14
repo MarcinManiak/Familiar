@@ -4,6 +4,7 @@
 
 <div><a class="btn btn-secondary btn-lg btn-block" href="{% url 'logedin' %}">Strona główna</a></div>
 
+<div class="back-joinfamily">
 <h4>Wpisz ID rodziny do której chcesz dołączyć.</h4>
 <h6>Może udestępnić C to osoba która zaprosiła Cię do Familiara lub o której wiesz, że znajduję się już w rodzinie której częścią jesteś.</h6>
 <form method="POST">
@@ -12,5 +13,7 @@
     <input type="text" id="join" name="family_id" class="form-control"><br>
     <button type="submit" class="btn btn-success">Dołącz!</button>
 </form>
+</div>
 
 {% endblock %}
+
