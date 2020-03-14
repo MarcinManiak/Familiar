@@ -19,10 +19,10 @@
     <br><br>
     <ul class="list-group">
       <li class="list-group-item active">Jesteś na profilu {{ profile }}</li>
-      <li class="list-group-item">Imię: {{ profile.first_name }}</li>
-      <li class="list-group-item">Nazwisko: {{ profile.last_name }}</li>
-      <li class="list-group-item">Email: {{ profile.email }}</li>
-      <li class="list-group-item">Dołączył: {{ profile.date_joined | date:"j.m.Y" }}</li>
+      <li class="list-group-item"><b>Imię:</b> {{ profile.first_name }}</li>
+      <li class="list-group-item"><b>Nazwisko:</b> {{ profile.last_name }}</li>
+      <li class="list-group-item"><b>Email:</b> {{ profile.email }}</li>
+      <li class="list-group-item"><b>Dołączył/a:</b> {{ profile.date_joined | date:"j.m.Y" }}</li>
     </ul>
 
     <!-- Optional JavaScript -->
