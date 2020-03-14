@@ -25,6 +25,76 @@
 
 {% endif %}
 
+<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Czym jest Familiar?
+        </button>
+      </h2>
+    </div>
 
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+        Familiar jest super.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Kto ma dostęp do danych które udostępniam?
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+          Członkowie rodzin
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Kto jest administratorem moich danych?
+        </button>
+      </h2>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+      <div class="card-body">
+        Ja.
+      </div>
+    </div>
+  <div class="card">
+    <div class="card-header" id="heading4">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapseThree">
+          Czy mogę usunąć konto?
+        </button>
+      </h2>
+    </div>
+    <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
+      <div class="card-body">
+        Tak, skontaktuj się z administratorem.
+      </div>
+    </div>
+  </div>
+    <div class="card-header" id="heading5">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapseThree">
+          Inne.
+        </button>
+      </h2>
+    </div>
+    <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionExample">
+      <div class="card-body">
+        Skontaktuj się.
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 

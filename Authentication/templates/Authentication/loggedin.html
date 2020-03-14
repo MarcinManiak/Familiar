@@ -1,6 +1,6 @@
 {% extends 'Authentication/base.html' %}
 
-
+{% load filters %}
 {% block content %}
 
 <!--NAVIGATION-->
@@ -47,15 +47,19 @@
 
 <!--EVENTS-->
 
+
 <h3>Nadchodzące wydarzenia:</h3><br>
 
 {% for event in events_in_my_families %}
-<div>
-    <h4>Autor: {{ event.author }}</h4>
-    <h3> {{ event.occasion }}</h3>
-    <p>{{ event.desc }}</p>
-    <h4>Data: {{ event.day }}.{{ event.month }}</h4>
-</div><br><br>
+<div class="card shadow-sm p-3 mb-5 bg-white rounded">
+  <div class="card-body">
+    <h3 class="card-title"> {{ event.author }} </h3>
+    <h5 class="card-title"> {{ event.occasion|upper }}</h5>
+    <h5 class="card-title"> {{ event.day }} {{event.month|month}}</h5>
+    <p class="card-text">{{ event.desc }}</p>
+  </div>
+</div>
+<br>
 {% endfor %}
 
 <!--POST-->
@@ -64,31 +68,36 @@
     <div>
         <form method="POST">
             {% csrf_token %}
-           <label for="send_post">Send post visible to all member of your families!</label><br>
+            <h3>Dodaj post</h3>
             <input type="hidden" name="form_type" value="post">
-           <textarea name='send_post' id='send_post' rows="3" cols="50"></textarea><br>
-           <button type="submit">Post!</button>
+           <textarea name='send_post' id='send_post' rows="3" cols="50" class="form-control"></textarea><br>
+           <button type="submit" class="btn btn-success">Dodaj!</button>
         </form>
     </div>
-
+ <br><br>
 <!--    VIEW POSTS-->
     <div>
         {% if posts_in_my_families %}
             {% for post in posts_in_my_families %}
-                <div>
-                    <h3>{{ post.author }}</h3>
-                    <p>{{ post.text }}</p>
-                    <h6>{{ post.date }}</h6>
-<!--                            delete post-->
-                            <form method="POST">
-                                {% csrf_token %}
-                                <input type="hidden" name="form_type" value="delete">
-                               <input name='post_to_delete' value="{{ post.pk }}" type=hidden >
-                               <button type="submit">Delete!</button>
-                            </form>
-                </div>
-
-            {% endfor %}
+            <div class="card border-dark mb-3 shadow p-3 mb-5 bg-white rounded" style="max-width: 25rem;">
+              <div class="card-header">Dodane: {{post.date |date:"m.d.Y - h:i"}}</div>
+              <div class="card-body text-dark">
+                <h5 class="card-title">{{ post.author }}</h5>
+                <p class="card-text">{{ post.text }}.</p>
+                  <!--                            delete post-->
+                  {% if post.author == user.username %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="delete">
+                       <input name='post_to_delete' value="{{ post.pk }}" type=hidden >
+                       <button type="submit" class="btn btn-danger btn-block">Usuń!</button>
+                    </form>
+                  {% endif %}
+              </div>
+            </div>
+                 {% endfor %}
+        {% else %}
+        <h2>Nikt z Twoich rodzin nie dodał jeszcze posta, bądź pierwszy!</h2>
         {% endif %}
     </div>
 
@@ -100,12 +109,12 @@
 <div style="max-height:70vh;overflow:scroll;overflow-x: hidden;">
 <div class="row justify-content-md-center">
     {% for photo in photos_in_my_families %}
-  <div class="card col-sm-3" style="margin:0.8em">
+  <div class="card col-sm-3 shadow-sm p-3 mb-5 bg-white rounded" style="margin:0.8em">
     <img class="card-img-top" src="{{ photo.photo.url }}" alt="Card image cap">
     <div class="card-body">
       <h5 class="card-title">{{ photo.author }}: {{ photo.title }}</h5>
       <p class="card-text">{{ photo.desc }}</p>
-      <p class="card-text"><small class="text-muted">Dodane: {{photo.date |date:"m.d.y - h:i"}}</small></p>
+      <p class="card-text"><small class="text-muted">Dodane: {{photo.date |date:"m.d.Y - h:i"}}</small></p>
     </div>
   </div>
     {% endfor %}

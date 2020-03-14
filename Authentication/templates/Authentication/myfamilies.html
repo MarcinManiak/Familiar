@@ -20,9 +20,9 @@
           <div class="row">
             <div class="col-sm">
                 <h3>{{ family.name }}</h3>
-                    <h4 >Family ID: <b>{{ family.pk }}</b></h4>
+                    <h4>ID rodziny: <b>{{ family.pk }}</b></h4>
                     <p>{{ family.description }}</p>
-                    <h4>Members of this family:</h4>
+                    <h4>Członkowie rodziny:</h4>
                     <ul>
                         {% for member in family.members.all %}
                         <li>
@@ -33,7 +33,7 @@
                     <form method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="family_id" value="{{ family.pk }}" ><br>
-                        <button type="submit" class="btn btn-danger">Leave this family!</button>
+                        <button type="submit" class="btn btn-danger">Opuść rodzinę!</button>
                     </form>
             </div>
           </div>
