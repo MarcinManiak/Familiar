@@ -6,22 +6,37 @@
   padding-top:30vh;
 }
 
+.blacked {
+    background: rgba(255,255,255,1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(252,252,252,0.92) 47%, rgba(255,255,255,0.84) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255,255,255,1)), color-stop(47%, rgba(252,252,252,0.92)), color-stop(100%, rgba(255,255,255,0.84)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(252,252,252,0.92) 47%, rgba(255,255,255,0.84) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(252,252,252,0.92) 47%, rgba(255,255,255,0.84) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(252,252,252,0.92) 47%, rgba(255,255,255,0.84) 100%);
+    background: radial-gradient(ellipse at center, rgba(255,255,255,1) 0%, rgba(252,252,252,0.92) 47%, rgba(255,255,255,0.84) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff', GradientType=1 );
+    border-radius: 10%;
+    padding:15px;
+
+}
+
 .back-register {
   width: 100wh;
   height: 100vh;
-  background-size: cover;
   text-align: center;
   padding-top:5vh;
-  background-image: url('./../img/cell.png');
+  background-size: 30%;
+  background-repeat: repeat;
+  background-image: url('./../img/kwiaty.png')
 }
 
 .back-createfamily {
   width: 100wh;
   height: 100vh;
-  background-size: cover;
+  background-size: contain;
   text-align: center;
   padding-top:10vh;
-  background-image: url('./../img/cell.png');
+  background-image: url('./../img/doodle3.png');
 }
 
 .back-joinfamily {
@@ -30,21 +45,34 @@
   background-size: cover;
   text-align: center;
   padding-top:30vh;
-  background-image: url('./../img/cell.png');
+  background-image: url('./../img/doodle3.png');
 }
 
-.back-home {
+.back-addevent {
   width: 100wh;
   height: 100vh;
   background-size: cover;
   text-align: center;
-  padding-top:30vh;
-  background-image: url('./../img/ptaki.jpg');
+  padding-top:8vh;
+  background-image: url('./../img/doodle3.png');
+}
+
+
+.back-home {
+  position: relative;
+  width: 100wh;
+  height: 100vh;
+  text-align: center;
+  padding-top:20vh;
+  background-position: -20% 0 ;
+  background-size: 20%;
+  background-image: url('./../img/home2.png')
 }
 
 .back-login {
-
-  background-image: url('./../img/ptaki.jpg');
+  background-size: 20%;
+  background-repeat: repeat;
+  background-image: url('./../img/domek.png');
 }
 
 
@@ -53,10 +81,18 @@
 }
 
 .btn-link:hover {
- color:green;
+ color:#6495ED;
 }
 
 .center-form {
  width: 40vw;
  margin: 0 auto;
+}
+
+.blue {
+ background-color: 5F9EA0;
+}
+
+.family {
+ margin: 3vh;
 }

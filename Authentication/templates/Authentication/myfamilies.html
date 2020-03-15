@@ -4,9 +4,10 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+{% load static %}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'Authentication/css/style.css' %}" />
 
     <title>Familiar</title>
   </head>
@@ -22,6 +23,9 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
     <a class="navbar-brand"">Zalogowany jako: {{ user.username }}</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'logedin'%}">Strona główna</a>
+        </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Moje rodziny</a>
             <div class="dropdown-menu">
@@ -49,12 +53,14 @@
     </ul>
   </div>
 </nav>
+
 <br><br>
 
-
-<h2>Jesteś członkiem {{ number_of_families }} rodzin/y:</h2>
+<h2 style="margin-top:3vh">Jesteś członkiem {{ number_of_families }} rodzin/y:</h2>
+<br><br>
+<div class="d-flex">
 {% for family in my_families %}
-    <div class="container">
+    <div class="family">
           <div class="row">
             <div class="col-sm">
                 <h3>{{ family.name }}</h3>
@@ -78,6 +84,7 @@
     </div>
 
 {% endfor %}
+</div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

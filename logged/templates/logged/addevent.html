@@ -4,9 +4,10 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+{% load static %}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'Authentication/css/style.css' %}" />
 
     <title>Familiar</title>
   </head>
@@ -22,6 +23,9 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
     <a class="navbar-brand"">Zalogowany jako: {{ user.username }}</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'logedin'%}">Strona główna</a>
+        </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Moje rodziny</a>
             <div class="dropdown-menu">
@@ -51,77 +55,79 @@
 </nav>
 <br><br>
 
+<div class="back-addevent">
+    <div class="blacked center-form">
+    <h4>Dodaj wydarzenie!</h4>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="occasion">Okazja</label>
+              <select id="occasion" name="occasion" class="form-control">
+                <option value="Urodziny">Urodziny</option>
+                <option value="Imieniny">Imieniny</option>
+                <option value="Rocznica">Rocznica</option>
+                <option value="Inne">Inne</option>
+              </select><br>
 
-<h4>Dodaj wydarzenie!</h4>
+            <label for="desc">Jeśli chcesz, możesz dodać opis:</label><br>
+               <textarea name='desc' class="form-control" id='desc' rows="5" cols="30"></textarea><br>
 
-<form method="POST">
-    {% csrf_token %}
-    <label for="occasion">Okazja</label>
-      <select id="occasion" name="occasion" class="form-control">
-        <option value="Urodziny">Urodziny</option>
-        <option value="Imieniny">Imieniny</option>
-        <option value="Rocznica">Rocznica</option>
-        <option value="Inne">Inne</option>
-      </select><br>
+            <label for="day">Dzień</label>
+              <select id="day" name="day" class="form-control">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+              </select><br>
 
-    <label for="desc">Jeśli chcesz, możesz dodać opis:</label><br>
-       <textarea name='desc' class="form-control" id='desc' rows="5" cols="30"></textarea><br>
-
-    <label for="day">Dzień</label>
-      <select id="day" name="day" class="form-control">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-        <option value="18">18</option>
-        <option value="19">19</option>
-        <option value="20">20</option>
-        <option value="21">21</option>
-        <option value="22">22</option>
-        <option value="23">23</option>
-        <option value="24">24</option>
-        <option value="25">25</option>
-        <option value="26">26</option>
-        <option value="27">27</option>
-        <option value="28">28</option>
-        <option value="29">29</option>
-        <option value="30">30</option>
-        <option value="31">31</option>
-      </select><br>
-
-    <label for="month">Miesiąc</label>
-      <select id="month" name="month" class="form-control">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-      </select><br>
+            <label for="month">Miesiąc</label>
+              <select id="month" name="month" class="form-control">
+                <option value="1">styczeń</option>
+                <option value="2">luty</option>
+                <option value="3">marzec</option>
+                <option value="4">kwiecień</option>
+                <option value="5">maj</option>
+                <option value="6">czerwiec</option>
+                <option value="7">lipiec</option>
+                <option value="8">sierpień</option>
+                <option value="9">wrzesień</option>
+                <option value="10">październik</option>
+                <option value="11">listopad</option>
+                <option value="12">grudzień</option>
+              </select><br>
 
 
-    <br>
-    <button type="submit" class="btn btn-outline-success">Dodaj!</button>
-</form>
+            <br>
+            <button type="submit" class="btn btn-outline-success">Dodaj!</button>
+        </form>
+    </div>
+</div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

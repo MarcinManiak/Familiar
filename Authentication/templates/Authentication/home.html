@@ -2,8 +2,7 @@
 
 {% block content %}
 
-<div class="back back-home align-middle">
-
+<div class="back-home align-middle">
   <h1>Witaj w Familiar</h1><br><br>
 
   {% if user.is_authenticated %}
@@ -11,24 +10,31 @@
   <h4>Jesteś już zalogowany jako: {{ user.username }}</h4>
 
 
-  <a href="{% url 'logedin' %}" type="button" class="btn btn-outline-primary btn-lg">Wejdź!</a> <br><br>
+<!--  <a href=class="btn btn-outline-primary btn-lg"></button> <br><br>-->
+  <form action="{% url 'logedin' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-success btn-lg">Wejdź!</button>
+  </form>
+  <br>
   <form action="{% url 'logoutuser' %}" method="POST">
       {% csrf_token %}
-      <button type="submit" class="btn btn-outline-primary btn-lg">Zmień konto!</button>
+      <button type="submit" class="btn btn-primary btn-lg">Zmień konto!</button>
   </form>
+  <br><br>
   {% else %}
 
 
   <h4>Masz już konto?</h4><br>
-  <a href="login/" class="btn btn-outline-primary btn-lg">Zaloguj!</a>
-  <a href="creatuser/" class="btn btn-outline-primary btn-lg">Stwórz konto!</a>
+  <a href="login/" class="btn btn-primary btn-lg">Zaloguj!</a>
+  <a href="creatuser/" class="btn btn-primary btn-lg">Stwórz konto!</a>
   <br><br><br><br>
 
   {% endif %}
 
+
   <div class="accordion" id="accordionExample">
     <div class="card">
-      <div class="card-header" id="headingOne">
+      <div class="card-header" id="headingOne" style="background:hsl(100, 90%, 97%)">
         <h2 class="mb-0">
           <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
             Czym jest Familiar?
@@ -38,12 +44,12 @@
 
       <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
-          Familiar jest super.
+          Familiar jest super! Jest to bezpłatna aplikacja w której możesz tworzyć rodziny i udostępniać im informację. Możesz dodać ważne dla Ciebie lub Twojej rodziny daty, poinformować wszystkich członków o najbliższych planach lub podzielić się zdjęciami. Dodatkowo Familiar z założenia jest minimalistyczny i intuicyjny, aby ułatwić korzystanie najmłodszym, jak i seniorom. Pomoże to lepiej organizować się Waszej rodzinie oraz zachować prywatność wrażliwych danych.
         </div>
       </div>
     </div>
     <div class="card">
-      <div class="card-header" id="headingTwo">
+      <div class="card-header" id="headingTwo" style="background:hsl(100, 90%, 97%)">
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
             Kto ma dostęp do danych które udostępniam?
@@ -52,12 +58,12 @@
       </div>
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
         <div class="card-body">
-            Członkowie rodzin
+            Główną ideą Familiara jest zachowanie prywatności i oddzielenie danych wrażliwych od ogólnodostępnych informacji w social mediach. Tym samym do rzeczy które udstępnisz dostęp będą mieli członkowie wszystkich Twoich rodzin - i tylko oni. Co więcej, każdy dodany przez Ciebie wpis będziesz mógł usunąć.
         </div>
       </div>
     </div>
     <div class="card">
-      <div class="card-header" id="headingThree">
+      <div class="card-header" id="headingThree" style="background:hsl(100, 90%, 97%)">
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
             Kto jest administratorem moich danych?
@@ -66,11 +72,11 @@
       </div>
       <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
         <div class="card-body">
-          Ja.
+          Aplikacja Familiar jest niekomercyjna. Informacje które udstępniasz w Familiar, nie będą w żaden spsób udostępniane osobą trzecim lub przetwarzane w celach marketingowych. Miej również na uwadzę, że chociaż dane te są w teorii zabezpieczone, niekomerycyjny charakter aplikacji nie gwarantuje ich ochorny. W praktyce oznacza to, że autorzy nie ponosza odpowiedzialności za ich nieintencjonalny wyciek, np. jako skutek ataku na stronę.
         </div>
       </div>
     <div class="card">
-      <div class="card-header" id="heading4">
+      <div class="card-header" id="heading4" style="background:hsl(100, 90%, 97%)">
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse4" aria-expanded="false" aria-controls="collapseThree">
             Czy mogę usunąć konto?
@@ -79,20 +85,20 @@
       </div>
       <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionExample">
         <div class="card-body">
-          Tak, skontaktuj się z administratorem.
+          Z konta samodzielnie możesz usunąć wszystkie udostępnione wpisy. Na dzień dzisiejszy nie ma możliwości usunięcią konta (może wkrótce :) ). Jeśli jednak bardzo Ci na tym zależy skantaktuj się z administracją (patrz niżej), która może ręcznie usunąć Twoje konto z bazy Familiar.
         </div>
       </div>
     </div>
-      <div class="card-header" id="heading5">
+      <div class="card-header" id="heading5" style="background:hsl(100, 90%, 97%)">
         <h2 class="mb-0">
           <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse5" aria-expanded="false" aria-controls="collapseThree">
-            Inne.
+            Regulamin / kontakt / inne
           </button>
         </h2>
       </div>
       <div id="collapse5" class="collapse" aria-labelledby="heading5" data-parent="#accordionExample">
         <div class="card-body">
-          Skontaktuj się.
+          Familiar ma za zadanie służyć głównie rodzinom autorów aplikacji. Jednak ze wzgledu na jego ogólnodostępny charakter, możesz założyć na nim konto. Robiąc to akceptujesz jednak fakt, że autorzy nie poczuwają się do odpowiedzialności za Twoje dane, jak również nie są zobowiązani do udzielania ogólnorozumianego support'u (wspracie techniczne, pomoc, usługi itd.). Jeśli jednak Ci to nie przeszkadza, śmiało możesz korzystać :). W razie pytań zapraszam do kontaktu.
         </div>
       </div>
     </div>

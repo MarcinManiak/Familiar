@@ -5,8 +5,8 @@
 {% load filters %}
 
 <div class="back back-login center">
-<h2>Login</h2>
-  <div class="center-form">
+  <div class="center-form blacked">
+    <h2>Login</h2>
   <form method="post">
     {% csrf_token %}
     {% if error != None%}
