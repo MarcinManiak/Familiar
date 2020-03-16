@@ -57,17 +57,17 @@
 <br><br>
 
 <h2 style="margin-top:3vh">Jesteś członkiem {{ number_of_families }} rodzin/y:</h2>
-<br><br>
+<br>
 <div class="d-flex">
 {% for family in my_families %}
     <div class="family">
           <div class="row">
             <div class="col-sm">
                 <h3>{{ family.name }}</h3>
-                    <h4>ID rodziny: <b>{{ family.pk }}</b></h4>
+                    <h5>ID rodziny: <b>{{ family.pk }}</b></h5>
                     <p>{{ family.description }}</p>
-                    <h4>Członkowie rodziny:</h4>
-                    <ul>
+                <button onclick="ShowMembers({{ family.pk }})" class="btn btn-light"><b>Członkowie rodziny</b></button>
+                    <ul id="{{ family.pk }}" style="display: none;S">
                         {% for member in family.members.all %}
                         <li>
                            <a href="{% url 'profile' member %}" class="badge badge-light">{{ member }}</a>
@@ -90,5 +90,14 @@
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script>
+        function ShowMembers(e) {
+            list = document.getElementById(e)
+            if (list.style.display === 'block') {
+                list.style.display = 'none'}
+            else {
+            list.style.display = 'block'}
+        }
+    </script>
   </body>
 </html>
