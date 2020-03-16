@@ -4,9 +4,10 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+{% load static %}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'Authentication/css/style.css' %}" />
 
     <title>Familiar</title>
   </head>
@@ -52,17 +53,18 @@
     </ul>
   </div>
 </nav>
-<br><br>
 
-
-    <br><br>
-    <ul class="list-group">
-      <li class="list-group-item active">Jesteś na profilu {{ profile }}</li>
-      <li class="list-group-item"><b>Imię:</b> {{ profile.first_name }}</li>
-      <li class="list-group-item"><b>Nazwisko:</b> {{ profile.last_name }}</li>
-      <li class="list-group-item"><b>Email:</b> {{ profile.email }}</li>
-      <li class="list-group-item"><b>Dołączył/a:</b> {{ profile.date_joined | date:"j.m.Y" }}</li>
-    </ul>
+<div class="back-joinfamily">
+    <div class="center-form">
+        <ul class="list-group">
+          <li class="list-group-item active">Jesteś na profilu {{ profile }}</li>
+          <li class="list-group-item"><b>Imię:</b> {{ profile.first_name }}</li>
+          <li class="list-group-item"><b>Nazwisko:</b> {{ profile.last_name }}</li>
+          <li class="list-group-item"><b>Email:</b> {{ profile.email }}</li>
+          <li class="list-group-item"><b>Dołączył/a:</b> {{ profile.date_joined | date:"j.m.Y" }}</li>
+        </ul>
+    </div>
+</div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

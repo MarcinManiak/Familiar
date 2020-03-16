@@ -22,6 +22,15 @@ class Post(models.Model):
     def __str__(self):
         return self.text+' '+self.author
 
+class Comment(models.Model):
+    author = models.CharField(max_length=256, default='None')
+    text = models.TextField()
+    date = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, default=0)
+
+    def __str__(self):
+        return self.text+' '+self.author
+
 
 class Photo(models.Model):
     author = models.CharField(max_length=256, default='None')

@@ -11,7 +11,7 @@ from .forms import CreateFamily
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Permission
-from logged.models import Event, Post, Photo
+from logged.models import Event, Post, Photo, Comment
 
 
 
@@ -97,11 +97,19 @@ def Logedin(request):
         posts = Post.objects.all().order_by('-date') #all posts
         posts_in_my_families = []
 
+        comments = Comment.objects.all().order_by('-date')
+        comments_in_my_families = []
+
         for post in posts:
             if post.author in members_of_my_families:
                 posts_in_my_families.append(post)
 
+        for comment in comments:
+            if comment.author in members_of_my_families:
+                comments_in_my_families.append(comment)
+
         posts_in_my_families = list(dict.fromkeys(posts_in_my_families))
+        comments_in_my_families = list(dict.fromkeys(comments_in_my_families))
 
         photos = Photo.objects.all().order_by('-date')  # all photos
         photos_in_my_families = []
@@ -112,7 +120,7 @@ def Logedin(request):
 
         photos_in_my_families = list(dict.fromkeys(photos_in_my_families))
 
-        return render(request, 'Authentication/loggedin.html',{'my_families':my_families, 'events_in_my_families':sorted_events, 'members_of_my_families':members_of_my_families,'posts_in_my_families':posts_in_my_families,'photos_in_my_families':photos_in_my_families})
+        return render(request, 'Authentication/loggedin.html',{'my_families':my_families, 'events_in_my_families':sorted_events, 'members_of_my_families':members_of_my_families,'posts_in_my_families':posts_in_my_families,'photos_in_my_families':photos_in_my_families,'comments_in_my_families':comments_in_my_families})
 
     elif request.method == 'POST':
         if request.POST.get("form_type") == 'post':
@@ -129,6 +137,21 @@ def Logedin(request):
             if post_to_delete.author == request.user.username:
                 post_to_delete.delete()
             return redirect('logedin')
+
+        if request.POST.get("form_type") == 'form_comment':
+            user = request.user.username
+            comment = request.POST['comment']
+            pk_post = request.POST['commented_post']
+            post = get_object_or_404(Post, pk=pk_post)
+
+            if comment != '':
+                new_comment = Comment(author=user, text=comment, post=post)
+                new_comment.save()
+
+
+
+            return redirect('logedin')
+
 
 
 

@@ -101,7 +101,27 @@
                        <input name='post_to_delete' value="{{ post.pk }}" type=hidden >
                        <button type="submit" class="btn btn-danger btn-block">Usuń!</button>
                     </form>
-                  {% endif %}
+                          {% endif %}
+<!--                  COMMENTS-->
+                  <br><hr>
+                  <h6>Komentarze:</h6>
+                  {% for comment in comments_in_my_families %}
+                    {% if comment.post.pk == post.pk%}
+                        {{ comment }} <br>
+                    {% endif %}
+                  {% endfor %}
+<!--                  ADD-->
+                      <form method="POST">
+                        {% csrf_token %}
+                        <hr>
+                       <h6>Skomentuj</h6>
+                       <input type="hidden" name="form_type" value="form_comment">
+                       <input type="hidden" name="commented_post" value="{{ post.pk }}">
+                       <textarea name='comment' id='comment' rows="2" cols="30" class="form-control"></textarea>
+                       <button type="submit" class="btn btn-success">Skomentuj!</button>
+                    </form>
+
+
               </div>
             </div>
                  {% endfor %}

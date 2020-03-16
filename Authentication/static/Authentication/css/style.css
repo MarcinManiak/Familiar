@@ -39,15 +39,6 @@
   background-image: url('./../img/doodle3.png');
 }
 
-back-myfamilies {
-  width: 100wh;
-  height: 100vh;
-  background-size: contain;
-  text-align: center;
-  padding-top:10vh;
-  background-image: url('./../img/doodle3.png');
-}
-
 .back-joinfamily {
   width: 100wh;
   height: 100vh;
