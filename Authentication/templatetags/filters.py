@@ -34,3 +34,7 @@ def month(value):
     if value == 12:
         result = 'grudzień'
     return result
+
+@register.filter
+def get(h, key):
+    return h[key]

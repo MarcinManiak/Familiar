@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 {% load static %}
+{% load filters %}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'Authentication/css/style.css' %}" />
@@ -13,15 +14,15 @@
   </head>
   <body>
 
+
 <!--NAVIGATION-->
 <!--RESPONSIVE-->
-
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand"">Zalogowany jako: {{ user.username }}</a>
+    <a class="navbar-brand">Zalogowany jako: {{ user.username }}</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item">
             <a class="nav-link" href="{% url 'logedin'%}">Strona główna</a>
@@ -56,34 +57,31 @@
 
 <br><br>
 
-<h2 style="margin-top:3vh">Jesteś członkiem {{ number_of_families }} rodzin/y:</h2>
-<br>
-<div class="d-flex">
+<div class="back-myfamilies">
+    <h2 style="margin:3vh">Jesteś członkiem {{ number_of_families }} rodzin/y:</h2>
+    <br>
+    <div class="d-flex justify-content-around flex-wrap">
 {% for family in my_families %}
-    <div class="family">
-          <div class="row">
-            <div class="col-sm">
-                <h3>{{ family.name }}</h3>
-                    <h5>ID rodziny: <b>{{ family.pk }}</b></h5>
-                    <p>{{ family.description }}</p>
-                <button onclick="ShowMembers({{ family.pk }})" class="btn btn-light"><b>Członkowie rodziny</b></button>
-                    <ul id="{{ family.pk }}" style="display: none;S">
-                        {% for member in family.members.all %}
-                        <li>
-                           <a href="{% url 'profile' member %}" class="badge badge-light">{{ member }}</a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    <form method="POST">
-                        {% csrf_token %}
-                        <input type="hidden" name="family_id" value="{{ family.pk }}" ><br>
-                        <button type="submit" class="btn btn-danger">Opuść rodzinę!</button>
-                    </form>
-            </div>
-          </div>
-    </div>
-
+        <div style="text-align: center;margin:3vh;">
+            <h3>{{ family.name }}</h3>
+                <h5>ID rodziny: <b>{{ family.pk }}</b></h5>
+                <p>{{ family.description }}</p>
+            <button onclick="ShowMembers({{ family.pk }})" class="btn btn-light"><b>Członkowie rodziny   </b><span class="badge badge-primary badge-pill"> {{ family.count_members }}</span></button>
+                <ul id="{{ family.pk }}" style="display: none;S">
+                    {% for member in family.members.all %}
+                    <li>
+                       <a href="{% url 'profile' member %}" class="badge badge-light">{{ member }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="family_id" value="{{ family.pk }}" ><br>
+                    <button type="submit" class="btn btn-danger">Opuść rodzinę!</button>
+                </form>
+        </div>
 {% endfor %}
+    </div>
 </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

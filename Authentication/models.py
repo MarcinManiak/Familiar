@@ -12,5 +12,8 @@ class Family(models.Model):
     description = models.TextField(blank=True, help_text='Opcjonalne, ale na pewno czym szczególnym się odznaczacie :) ')
     members = models.ManyToManyField(Member)
 
+    def count_members(self):
+        return len(self.members.all())
+
     def __str__(self):
         return f'{self.pk} {self.name}'
