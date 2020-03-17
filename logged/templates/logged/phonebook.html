@@ -1,26 +1,28 @@
 <!doctype html>
-<html lang="pl">
+<html lang="en">
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+{% load static %}
+{% load filters %}
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'Authentication/css/style.css' %}" />
 
     <title>Familiar</title>
   </head>
   <body>
 
+
 <!--NAVIGATION-->
 <!--RESPONSIVE-->
-
 <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand"">Zalogowany jako: {{ user.username }}</a>
+    <a class="navbar-brand">Zalogowany jako: {{ user.username }}</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item">
             <a class="nav-link" href="{% url 'logedin'%}">Strona główna</a>
@@ -52,29 +54,25 @@
     </ul>
   </div>
 </nav>
-<br><br>
 
+<br><br><br><br>
 
-    {% load filters %}
-
-<div>
-    <h2 style="margin:3vh">Twoje wydarzenia:</h2>
-    <br>
-    <div class="d-flex justify-content-around flex-wrap">
-        {% for my_event in my_events %}
-    <div style="text-align:center;">
-            <h2>{{ my_event.occasion }}</h2>
-            <p>{{ my_event.desc }}</p>
-            <h4>{{ my_event.day }} {{my_event.month|month}}</h4>
+    {% if allow %}
+        {% for number in numbers_in_my_families%}
+            <h4>{{ number.author }}: {{ number.phone_number }}</h4>
+        {% endfor %}
+    {% else %}
+        <h3>Aby mieć dostęp do książki telefonicznej dodaj swój numer telefonu.</h3>
+        <h6>Będzie on widoczny dla członków Twojej rodziny i wykorzystany wyłącznie w tym celu :)</h6>
             <form method="POST">
                 {% csrf_token %}
-                <input type="hidden" name="event_id" value="{{ my_event.pk }}" ><br>
-                <button type="submit" class="btn btn-outline-danger">Usuń!</button>
+                <input name="phone_number" class="form-control"><br>
+                <button type="submit" class="btn btn-outline-success">Dodaj!</button>
             </form>
-    </div>
-        {% endfor %}
-    </div>
-</div>
+        {% if error %}
+            <h4 style="color:red;"> {{ error }}</h4>
+        {% endif %}
+    {% endif %}
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

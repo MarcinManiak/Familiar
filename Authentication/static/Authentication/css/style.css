@@ -1,5 +1,5 @@
 .back {
-  width: 100wh;
+  width: 100wv;
   height: 100vh;
   background-size: cover;
   text-align: center;
@@ -21,7 +21,7 @@
 }
 
 .back-register {
-  width: 100wh;
+  width: 100wv;
   height: 100vh;
   text-align: center;
   padding-top:5vh;
@@ -40,7 +40,7 @@
 }
 
 .back-joinfamily {
-  width: 100wh;
+  width: 100wv;
   height: 100vh;
   background-size: cover;
   text-align: center;
@@ -49,7 +49,7 @@
 }
 
 .back-addevent {
-  width: 100wh;
+  width: 100wv;
   height: 100vh;
   background-size: cover;
   text-align: center;
@@ -59,7 +59,7 @@
 
 .back-home {
   position: relative;
-  width: 100wh;
+  width: 100wv;
   height: 100vh;
   text-align: center;
   padding-top:20vh;
@@ -91,3 +91,4 @@
 .blue {
  background-color: 5F9EA0;
 }
+

@@ -36,6 +36,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'photos'%}">Zdjęcia</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'phonebook'%}">Książka telefoniczna</a>
+          </li>
         <form action="{% url 'logoutuser' %}" method="POST">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary btn-block">Wyloguj</button>
@@ -47,32 +50,93 @@
 
 
 {% if not my_families%}
+<br><br><br><br>
+<div class="center-form" style="text-align:center;">
 <h2>Czas dołączyć do jakiejś rodziny</h2> <br>
-<h4>Stwórz jako pierwszy swoją rodzię lub poproś osobę która zaprosiła Cię do Familiara o ID rodziny do której chciałbyś dołączyć</h4><br><br>
-    <a href="{% url 'createfamily'%}" class="btn btn-primary btn-block">Stwórz rodzinę</a><br>
-    <a href="{% url 'joinfamily'%}" class="btn btn-primary btn-block">Dołącz do istniejące rodziny</a><br>
+<h6>Stwórz jako pierwszy swoją rodzię lub poproś osobę która zaprosiła Cię do Familiara o ID rodziny do której chciałbyś dołączyć.</h6><br><br>
+    <a href="{% url 'createfamily'%}" class="btn btn-primary">Stwórz rodzinę</a>
+    <a href="{% url 'joinfamily'%}" class="btn btn-primary">Dołącz do istniejące rodziny</a><br>
+</div>
 {% else %}
 
 
 <!--EVENTS-->
 
+<div class="d-flex flex-wrap justify-content-around">
+<!--    EVENTS-->
+    {% if two_events %}
+    <div id="events" style="width:30vw; padding:2vw; min-width:250px;">
+        <h3>Nadchodzące wydarzenia:</h3><br>
+        {% for event in two_events %}
+            <div class="card shadow-sm p-2 mb-1 bg-white rounded">
+              <div class="card-body">
+                <h3 class="card-title"> {{ event.author }} </h3>
+                <h5 class="card-title"> {{ event.occasion|upper }}</h5>
+                <h5 class="card-title"> {{ event.day }} {{event.month|month}}</h5>
+                <p class="card-text">{{ event.desc }}</p>
+              </div>
+            </div>
+            <br>
+            {% endfor %}
+        {% if how_much_events >= 3%}
+            <button class="btn btn-outline-primary btn-block" type="button" onclick="ShowEvents()">Pokaż więcej</button>
+        {% endif %}
+    </div>
+    {% endif %}
+    <!--POST-->
+    {% if latest_post %}
+    <div id="latest_post" style="padding:2vw; min-width:400px; max-width:35vw;">
+        <h3>Najnowszy post:</h3><br>
+            <div class="card border-dark mb-3 shadow p-3 mb-5 bg-white rounded" style="max-width: 25rem;">
+              <div class="card-header">Dodane: {{latest_post.date |date:"m.d.Y - h:i"}}</div>
+              <div class="card-body text-dark">
+                <h5 class="card-title">{{ latest_post.author }}</h5>
+                <p class="card-text">{{ latest_post.text }}.</p>
+                  <!--                            delete post-->
+                  {% if post.author == latest_post.username %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="form_type" value="delete">
+                       <input name='post_to_delete' value="{{ latest_post.pk }}" type=hidden >
+                       <button type="submit" class="btn btn-danger btn-block">Usuń!</button>
+                    </form>
+                          {% endif %}
+    <!--                  COMMENTS-->
+                  <br><hr>
+                  <div style="max-height: 318px; overflow: hidden;">
+                  <h6><b>Komentarze:</b></h6>
+                      {% for comment in comments_in_my_families %}
+                        {% if comment.latest_post.pk == post.pk %}
+                              <b>{{ comment.author }}:</b> {{ comment.text }}<br>
+                        {% endif %}
+                      {% endfor %}
+                  </div>
+             </div>
+        </div>
+    </div>
+    {% endif %}
 
-<h3>Nadchodzące wydarzenia:</h3><br>
-
-{% for event in events_in_my_families %}
-<div class="card shadow-sm p-3 mb-5 bg-white rounded">
-  <div class="card-body">
-    <h3 class="card-title"> {{ event.author }} </h3>
-    <h5 class="card-title"> {{ event.occasion|upper }}</h5>
-    <h5 class="card-title"> {{ event.day }} {{event.month|month}}</h5>
-    <p class="card-text">{{ event.desc }}</p>
-  </div>
+    <!--PHOTO-->
+    {% if latest_photo %}
+    <div style="padding:2vw; min-width:300px; max-width:30vw;">
+        <h3>Najnowsze zdjęcie:</h3><br>
+                <img class="card-img-top" src="{{ latest_photo.photo.url }}" alt="Card image cap">
+                <div class="card-body">
+                  <h5 class="card-title">{{ latest_photo.author }}: {{ latest_photo.title }}</h5>
+                  <p class="card-text">{{ latest_photo.desc }}</p>
+                  <p class="card-text"><small class="text-muted">Dodane: {{latest_photo.date |date:"m.d.Y - h:i"}}</small></p>
+                </div>
+    </div>
+    {% endif %}
+    </div>
 </div>
-<br>
-{% endfor %}
 
+
+        <br><br><br>
+----------------------------------
+        -------------------------------
 <!--POST-->
-<dvi>
+<div>
 <!--    CREATE POST-->
     <div>
         <form method="POST">
@@ -103,13 +167,21 @@
                     </form>
                           {% endif %}
 <!--                  COMMENTS-->
-                  <br><hr>
-                  <h6>Komentarze:</h6>
-                  {% for comment in comments_in_my_families %}
-                    {% if comment.post.pk == post.pk%}
-                        {{ comment }} <br>
-                    {% endif %}
-                  {% endfor %}
+                      <br><hr>
+                      <h6>Komentarze:</h6>
+                      {% for comment in comments_in_my_families %}
+                        {% if comment.post.pk == post.pk%}
+                              <b>{{ comment.author }}:</b> {{ comment.text }}<br>
+                                {% if comment.author == user.username %}
+                                    <form method="POST">
+                                    {% csrf_token %}
+                                       <input type="hidden" name="delete_comment" value="{{ comment.pk }}">
+                                       <input type="hidden" name="form_type" value="form_comment_delete">
+                                       <button type="submit" class="btn btn-outline-danger btn-sm">Usuń komentarz!</button>
+                                    </form>
+                                {% endif %}
+                        {% endif %}
+                      {% endfor %}
 <!--                  ADD-->
                       <form method="POST">
                         {% csrf_token %}
@@ -136,20 +208,35 @@
 {% if photos_in_my_families %}
 
 <div style="max-height:70vh;overflow:scroll;overflow-x: hidden;">
-<div class="row justify-content-md-center">
-    {% for photo in photos_in_my_families %}
-  <div class="card col-sm-3 shadow-sm p-3 mb-5 bg-white rounded" style="margin:0.8em">
-    <img class="card-img-top" src="{{ photo.photo.url }}" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">{{ photo.author }}: {{ photo.title }}</h5>
-      <p class="card-text">{{ photo.desc }}</p>
-      <p class="card-text"><small class="text-muted">Dodane: {{photo.date |date:"m.d.Y - h:i"}}</small></p>
+    <div class="row justify-content-md-center">
+        {% for photo in photos_in_my_families %}
+      <div class="card col-sm-3 shadow-sm p-3 mb-5 bg-white rounded" style="margin:0.8em">
+        <img class="card-img-top" src="{{ photo.photo.url }}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ photo.author }}: {{ photo.title }}</h5>
+          <p class="card-text">{{ photo.desc }}</p>
+          <p class="card-text"><small class="text-muted">Dodane: {{photo.date |date:"m.d.Y - h:i"}}</small></p>
+        </div>
+      </div>
+        {% endfor %}
     </div>
-  </div>
-    {% endfor %}
-</div>
 </div>
 <br><br>
+
 {% endif %}
 {% endif %}
+
+    <script>
+        function ShowEvents() {
+        EventDIV = document.getElementById('events')
+        EventDIV.style.width = '100vw'
+        EventDIV.innerHTML = '<h3>Nadchodzące wydarzenia:</h3><br><div class="d-flex flex-wrap justify-content-around">{% for event in events_in_my_families %}<div class="card shadow-sm p-2 mb-1 bg-white rounded"><div class="card-body"><h3 class="card-title"> {{ event.author }} </h3><h5 class="card-title"> {{ event.occasion|upper }}</h5><h5 class="card-title"> {{ event.day }} {{event.month|month}}</h5><p class="card-text">{{ event.desc }}</p></div></div><br>{% endfor %}</div><br><button class="btn btn-outline-primary btn-block" type="button" onclick="HideEvents()">Pokaż Mniej</button>'}
+
+     function HideEvents() {
+            EventDIV = document.getElementById('events')
+            EventDIV.style.width = '30vw'
+            EventDIV.innerHTML = '<h3>Nadchodzące wydarzenia:</h3><br>{% for event in two_events %}<div class="card shadow-sm p-2 mb-1 bg-white rounded"><div class="card-body"><h3 class="card-title"> {{ event.author }} </h3><h5 class="card-title"> {{ event.occasion|upper }}</h5><h5 class="card-title"> {{ event.day }} {{event.month|month}}</h5><p class="card-text">{{ event.desc }}</p></div></div><br>{% endfor %}<button class="btn btn-outline-primary btn-block" type="button" onclick="ShowEvents()">Pokaż więcej</button>'}
+    </script>
+
 {% endblock %}
+

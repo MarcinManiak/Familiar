@@ -41,3 +41,10 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.title+'-----'+self.author
+
+class Phone(models.Model):
+    author = models.CharField(max_length=256, default='None')
+    phone_number = models.PositiveSmallIntegerField()
+
+    def __str__(self):
+        return self.author

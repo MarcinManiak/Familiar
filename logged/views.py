@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from .models import Event, Photo
+from .models import Event, Photo, Phone
+from Authentication.models import Family
 from .forms import ImageForm
 
 @login_required
@@ -18,7 +19,7 @@ def Addevent(request):
         new_event = Event(author=author,occasion=occasion, desc=desc,day=day,month=month)
         new_event.save()
 
-        return redirect('logedin')
+        return redirect('myevents')
 
 @login_required
 def Myevents(request):
@@ -57,4 +58,60 @@ def Photos(request):
             new_photo.save()
 
             return redirect('photos')
+
+@login_required
+def Phonebook(request):
+    if request.method=='GET':
+
+        families = Family.objects.filter()
+        phone_numbers = Phone.objects.all()
+        numbers_in_my_families = []
+        my_families = [] # families that I belong to
+        members_of_my_families = []
+
+        for family in families:
+            for member in family.members.all():
+                if str(member) == str(request.user.username):
+                    my_families.append(family)
+
+        for family in my_families:
+            for member in family.members.all():
+                members_of_my_families.append(member.member)
+
+        members_of_my_families = list(dict.fromkeys(members_of_my_families))
+
+        for number in phone_numbers:
+            if number.author in members_of_my_families:
+                numbers_in_my_families.append(number)
+
+        numbers_in_my_families = list(dict.fromkeys(numbers_in_my_families))
+
+        allow = False
+
+        for number in numbers_in_my_families:
+            if number.author == request.user.username:
+                allow = True
+            else:
+                allow = False
+
+        return render(request, 'logged/phonebook.html', {'numbers_in_my_families':numbers_in_my_families, 'allow':allow})
+
+    elif request.method == 'POST':
+        author = request.user.username
+        phone_number = request.POST['phone_number']
+        if phone_number.isnumeric():
+            try:
+                new_number = get_object_or_404(Phone, author=author)
+                error = 'Dodałeś już numer telefonu'
+                return render(request, 'logged/phonebook.html', {'error': error})
+            except:
+                new_number = Phone(author=author, phone_number=phone_number)
+                new_number.save()
+                error = None
+                return redirect('phonebook')
+        else:
+            error = 'Podaj proszę numer złożony wyłącznie z liczb!'
+            return render(request, 'logged/phonebook.html', {'error': error})
+
+
 

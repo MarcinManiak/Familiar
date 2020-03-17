@@ -92,6 +92,8 @@ def Logedin(request):
                                                                   event_in_family.month)
 
         sorted_events = sorted(events_in_my_families, key=attrgetter('this_year'))
+        two_events = sorted_events.copy()[:2]
+        how_much_events = len(sorted_events)
 
 
         posts = Post.objects.all().order_by('-date') #all posts
@@ -111,6 +113,11 @@ def Logedin(request):
         posts_in_my_families = list(dict.fromkeys(posts_in_my_families))
         comments_in_my_families = list(dict.fromkeys(comments_in_my_families))
 
+        try:
+            latest_post = posts_in_my_families[0]
+        except:
+            latest_post = None
+
         photos = Photo.objects.all().order_by('-date')  # all photos
         photos_in_my_families = []
 
@@ -119,8 +126,13 @@ def Logedin(request):
                 photos_in_my_families.append(photo)
 
         photos_in_my_families = list(dict.fromkeys(photos_in_my_families))
+        try:
+            latest_photo = photos_in_my_families[0]
+        except:
+            latest_photo = None;
 
-        return render(request, 'Authentication/loggedin.html',{'my_families':my_families, 'events_in_my_families':sorted_events, 'members_of_my_families':members_of_my_families,'posts_in_my_families':posts_in_my_families,'photos_in_my_families':photos_in_my_families,'comments_in_my_families':comments_in_my_families})
+
+        return render(request, 'Authentication/loggedin.html',{'my_families':my_families, 'events_in_my_families':sorted_events, 'members_of_my_families':members_of_my_families,'posts_in_my_families':posts_in_my_families,'photos_in_my_families':photos_in_my_families,'comments_in_my_families':comments_in_my_families,'two_events':two_events,'how_much_events':how_much_events,'latest_post':latest_post,'latest_photo':latest_photo})
 
     elif request.method == 'POST':
         if request.POST.get("form_type") == 'post':
@@ -148,10 +160,16 @@ def Logedin(request):
                 new_comment = Comment(author=user, text=comment, post=post)
                 new_comment.save()
 
-
-
             return redirect('logedin')
 
+
+        if request.POST.get("form_type") == 'form_comment_delete':
+            pk_comment = request.POST['delete_comment']
+            comment = get_object_or_404(Comment, pk=pk_comment)
+            if comment.author == request.user.username:
+                comment.delete()
+
+            return redirect('logedin')
 
 
 
@@ -201,7 +219,7 @@ def Joinfamily(request):
         family.members.add(new_member)
         family.save()
 
-        return redirect('logedin')
+        return redirect('myfamilies')
 
 @login_required
 def Myfamilies(request):
@@ -224,7 +242,7 @@ def Myfamilies(request):
         family.members.remove(new_member)
         family.save()
 
-        return redirect('logedin')
+        return redirect('myfamilies')
 
 @login_required
 def Profile(request, profile_name):
