@@ -9,6 +9,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'Authentication/css/style.css' %}" />
+
     <title>Familiar</title>
   </head>
   <body>
@@ -56,32 +57,29 @@
     </ul>
   </div>
 </nav>
-<br><br>
 
-<br><br>
-<h2>Dodaj zdjęcie:</h2>
-<div class="center-form">
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="hidden" name="form_type" value="add_photo" class="form-control"><br>
-        <h5>Tytuł:</h5>
-        <input id="photo" name="title" class="form-control"><br><br>
-        <h5>Opis (opcjonalnie):</h5>
-        <textarea name="desc" class="form-control"></textarea><br>
-        <h5>Wybierz zdjęcie:</h5>
-        <input type="file" name="photo_file"> <br> <br>
-         <button type="submit" class="btn btn-success" action="{% url 'photos' %}">Dodaj!</button>
-    </form>
+<div class="back-photos">
+    <h2 style="margin:10vh;">Dodaj zdjęcie:</h2>
+    <div class="center-form bg-white">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="add_photo" class="form-control"><br>
+            <h5>Tytuł:</h5>
+            <input id="photo" name="title" class="form-control"><br><br>
+            <h5>Opis (opcjonalnie):</h5>
+            <textarea name="desc" class="form-control"></textarea><br>
+            <h5>Wybierz zdjęcie:</h5>
+            <input type="file" name="photo_file"> <br> <br>
+             <button type="submit" class="btn btn-success" action="{% url 'photos' %}">Dodaj!</button>
+        </form>
+    </div>
+    <br><br><br>
 </div>
-
-
-<br><br><hr><br>
-
 <h2> Twoje zdjęcia: </h2>
 <br>
 <div class="row">
     {% for photo in photos %}
-    <div class="card col-sm-4" style="width: 18rem;">
+    <div class="card col-sm-3" style="width: 18rem;">
       <img class="card-img-top" src="{{ photo.photo.url }}" alt="Card image cap">
       <div class="card-body">
         <h5 class="card-title">{{ photo.title }}</h5>

@@ -5,8 +5,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+{% load static%}
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'Authentication/css/style.css' %}" />
 
     <title>Familiar</title>
   </head>
@@ -60,12 +63,12 @@
 
     {% load filters %}
 
-<div>
+<div class="back-myevents">
     <h2 style="margin:3vh">Twoje wydarzenia:</h2>
     <br>
     <div class="d-flex justify-content-around flex-wrap">
         {% for my_event in my_events %}
-    <div class='shadow' style="text-align:center; border: 2px gray linear; padding: 15px; border-radius:4%; width:300px;margin-top:5vh;">
+    <div class='shadow bg-white' style="text-align:center; border: 2px gray linear; padding: 15px; border-radius:4%; width:300px;margin-top:5vh;">
             <h2>{{ my_event.occasion }}</h2>
             <p>{{ my_event.desc }}</p>
             <h4>{{ my_event.day }} {{my_event.month|month}}</h4>

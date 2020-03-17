@@ -58,14 +58,13 @@
   </div>
 </nav>
 
-<br><br>
 
-<div class="back-myfamilies">
+<div class="back-myfamilies" style="margin-top:10vh;">
     <h2 style="margin:3vh">Jesteś członkiem {{ number_of_families }} rodzin/y:</h2>
     <br>
     <div class="d-flex justify-content-around flex-wrap">
 {% for family in my_families %}
-        <div style="text-align: center;margin:3vh;">
+        <div style="text-align: center;margin:3vh; min-width:400px;padding:2%;border-radius:3%;" class="bg-white">
             <h3>{{ family.name }}</h3>
                 <h5>ID rodziny: <b>{{ family.pk }}</b></h5>
                 <p>{{ family.description }}</p>

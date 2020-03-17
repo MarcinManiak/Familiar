@@ -96,3 +96,33 @@
  border: 2px gray double;
  border-radius: 10%;
 }
+
+.back-logged {
+ background-image: url('./../img/doodle5.png');
+ background-repeat: repeat;
+ background-size: 30%;
+}
+
+.bg-nav {
+ background-image: url('./../img/doodle-nav.png');
+ background-size: contain;
+ background-repeat: repeat;
+}
+
+.back-myfamilies {
+  width: 100wv;
+  min-height: 90vh;
+ background-image: url('./../img/doodle5.png')
+}
+
+.back-myevents {
+  width: 100wv;
+  min-height: 90vh;
+ background-image: url('./../img/doodle5.png')
+}
+
+.back-photos {
+  width: 100wv;
+  min-height: 90vh;
+ background-image: url('./../img/doodle5.png')
+}
