@@ -46,6 +46,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'photos'%}">Zdjęcia</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'phonebook'%}">Książka telefoniczna</a>
+          </li>
         <form action="{% url 'logoutuser' %}" method="POST">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary btn-block">Wyloguj</button>
@@ -57,7 +60,7 @@
 <div class="back-joinfamily">
     <div class="center-form">
         <ul class="list-group">
-          <li class="list-group-item active">Jesteś na profilu {{ profile }}</li>
+            <li class="list-group-item active">Jesteś na profilu: <b>{{ profile }}</b> </li>
           <li class="list-group-item"><b>Imię:</b> {{ profile.first_name }}</li>
           <li class="list-group-item"><b>Nazwisko:</b> {{ profile.last_name }}</li>
           <li class="list-group-item"><b>Email:</b> {{ profile.email }}</li>

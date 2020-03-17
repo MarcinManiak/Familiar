@@ -87,19 +87,30 @@ def Phonebook(request):
         numbers_in_my_families = list(dict.fromkeys(numbers_in_my_families))
 
         allow = False
+        my_number = None
 
         for number in numbers_in_my_families:
             if number.author == request.user.username:
+                my_number = number.phone_number
                 allow = True
-            else:
-                allow = False
 
-        return render(request, 'logged/phonebook.html', {'numbers_in_my_families':numbers_in_my_families, 'allow':allow})
+        return render(request, 'logged/phonebook.html', {'numbers_in_my_families':numbers_in_my_families, 'allow':allow,'my_number':my_number})
 
     elif request.method == 'POST':
         author = request.user.username
         phone_number = request.POST['phone_number']
-        if phone_number.isnumeric():
+        if request.POST.get('what_to_do') == 'edit_number':
+            if request.POST.get('phone_number').isnumeric():
+                to_edit = Phone.objects.get(author=author)
+                to_edit.phone_number = request.POST.get('phone_number')
+                print(to_edit.phone_number)
+                print(request.POST.get('phone_number'))
+                to_edit.save()
+                return redirect('phonebook')
+            else:
+                return redirect('phonebook')
+
+        elif phone_number.isnumeric():
             try:
                 new_number = get_object_or_404(Phone, author=author)
                 error = 'Dodałeś już numer telefonu'

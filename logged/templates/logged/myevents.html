@@ -45,6 +45,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'photos'%}">Zdjęcia</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'phonebook'%}">Książka telefoniczna</a>
+          </li>
         <form action="{% url 'logoutuser' %}" method="POST">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary btn-block">Wyloguj</button>
@@ -62,7 +65,7 @@
     <br>
     <div class="d-flex justify-content-around flex-wrap">
         {% for my_event in my_events %}
-    <div style="text-align:center;">
+    <div class='shadow' style="text-align:center; border: 2px gray linear; padding: 15px; border-radius:4%; width:300px;margin-top:5vh;">
             <h2>{{ my_event.occasion }}</h2>
             <p>{{ my_event.desc }}</p>
             <h4>{{ my_event.day }} {{my_event.month|month}}</h4>

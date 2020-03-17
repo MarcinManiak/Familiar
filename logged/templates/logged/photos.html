@@ -21,7 +21,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand"">Zalogowany jako: {{ user.username }}</a>
+    <a class="navbar-brand">Zalogowany jako: {{ user.username }}</a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item">
             <a class="nav-link" href="{% url 'logedin'%}">Strona główna</a>
@@ -46,6 +46,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'photos'%}">Zdjęcia</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'phonebook'%}">Książka telefoniczna</a>
+          </li>
         <form action="{% url 'logoutuser' %}" method="POST">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary btn-block">Wyloguj</button>
@@ -67,7 +70,7 @@
         <textarea name="desc" class="form-control"></textarea><br>
         <h5>Wybierz zdjęcie:</h5>
         <input type="file" name="photo_file"> <br> <br>
-         <button type="submit" class="btn btn-outline-success" action="{% url 'photos' %}">Dodaj!</button>
+         <button type="submit" class="btn btn-success" action="{% url 'photos' %}">Dodaj!</button>
     </form>
 </div>
 
@@ -87,7 +90,7 @@
                 {% csrf_token %}
                 <input type="hidden" name="form_type" value="delete_photo">
                 <input type="hidden" name="photo_id" value="{{ photo.pk }}" ><br>
-                <button type="submit" class="btn btn-outline-danger">Usuń!</button>
+                <button type="submit" class="btn btn-danger">Usuń!</button>
             </form>
       </div>
     </div>

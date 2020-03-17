@@ -47,6 +47,9 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'photos'%}">Zdjęcia</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'phonebook'%}">Książka telefoniczna</a>
+          </li>
         <form action="{% url 'logoutuser' %}" method="POST">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary btn-block">Wyloguj</button>
@@ -58,14 +61,27 @@
 <br><br><br><br>
 
     {% if allow %}
+        <div class="center-form">
+            <h3>Twój numer telefonu to:</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    <input name="what_to_do" class="form-control" value="edit_number" type="hidden"><br>
+                    <input name="phone_number" class="form-control" value="{{ my_number }}"><br>
+                    <button type="submit" class="btn btn-outline-success">Zmień!</button>
+                </form>
+            <h5 style="color:red;"> {{ error }} </h5>
+        </div>
+        <br><hr><br>
         <div>
-            <ul class="list-group">
+            <ul class="list-group center-form shadow">
+              <li class="list-group-item active">Numery telefonów członków Twoich rodziny:</li>
               {% for number in numbers_in_my_families%}
                 <a href="{% url 'profile' number.author %}" class="list-group-item list-group-item-action"><b>{{ number.author }}: </b> {{ number.phone_number }}</a>
               {% endfor %}
             </ul>
          </div>
     {% else %}
+        <div class="center-form" style="text-align: center">
         <h3>Aby mieć dostęp do książki telefonicznej dodaj swój numer telefonu.</h3>
         <h6>Będzie on widoczny dla członków Twojej rodziny i wykorzystany wyłącznie w tym celu :)</h6>
             <form method="POST">
@@ -76,6 +92,7 @@
         {% if error %}
             <h4 style="color:red;"> {{ error }}</h4>
         {% endif %}
+        </div>
     {% endif %}
 
     <!-- Optional JavaScript -->

@@ -2,21 +2,21 @@
 
 {% load filters %}
 {% block content %}
-
+{% load static %}
 <!--NAVIGATION-->
 <!--RESPONSIVE-->
 
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark" style="border-bottom: 2px black solid; border-radius:0 0 10% 10%">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <a class="navbar-brand"">Zalogowany jako: {{ user.username }}</a>
+    <a class="navbar-brand" href="{% url 'logedin' %}">
+        <img src="{% static 'Authentication/favicon/android-chrome-192x192.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+        Familiar
+    </a>
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'logedin'%}">Strona główna</a>
-        </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item active dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Moje rodziny</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="{% url 'myfamilies'%}">Przeglądaj rodziny</a>
@@ -25,7 +25,7 @@
               <a class="dropdown-item" href="{% url 'joinfamily'%}">Dołącz do rodziny</a>
             </div>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item active dropdown">
             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Wydarzenia</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="{% url 'myevents'%}">Przeglądaj moje wydarzenia</a>
@@ -33,15 +33,15 @@
               <a class="dropdown-item" href="{% url 'addevent'%}">Dodaj wydarzenie</a>
             </div>
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" href="{% url 'photos'%}">Zdjęcia</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item active">
             <a class="nav-link" href="{% url 'phonebook'%}">Książka telefoniczna</a>
           </li>
-        <form action="{% url 'logoutuser' %}" method="POST">
+        <form action="{% url 'logoutuser' %}" method="POST" class="form-inline">
             {% csrf_token %}
-            <button type="submit" class="btn btn-primary btn-block">Wyloguj</button>
+            <button type="submit" class="btn btn-sm btn-outline-dark btn-block">Wyloguj</button>
         </form>
     </ul>
   </div>
@@ -65,7 +65,7 @@
 <div class="d-flex flex-wrap justify-content-around">
 <!--    EVENTS-->
     {% if two_events %}
-    <div id="events" style="width:30vw; padding:2vw; min-width:250px;">
+    <div id="events" style="width:30vw; padding:2vw; min-width:250px;transition: width 0.5s linear;">
         <h3>Nadchodzące wydarzenia:</h3><br>
         {% for event in two_events %}
             <div class="card shadow-sm p-2 mb-1 bg-white rounded">
@@ -98,7 +98,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="form_type" value="delete">
                        <input name='post_to_delete' value="{{ latest_post.pk }}" type=hidden >
-                       <button type="submit" class="btn btn-danger btn-block">Usuń!</button>
+                       <button type="submit" class="btn btn-outline-danger btn-block btn-sm">Usuń!</button>
                     </form>
                           {% endif %}
     <!--                  COMMENTS-->
@@ -120,12 +120,14 @@
     {% if latest_photo %}
     <div style="padding:2vw; min-width:300px; max-width:30vw;">
         <h3>Najnowsze zdjęcie:</h3><br>
+        <div class="shadow">
                 <img class="card-img-top" src="{{ latest_photo.photo.url }}" alt="Card image cap">
                 <div class="card-body">
                   <h5 class="card-title">{{ latest_photo.author }}: {{ latest_photo.title }}</h5>
                   <p class="card-text">{{ latest_photo.desc }}</p>
                   <p class="card-text"><small class="text-muted">Dodane: {{latest_photo.date |date:"m.d.Y - h:i"}}</small></p>
                 </div>
+        </div>
     </div>
     {% endif %}
     </div>
@@ -163,7 +165,7 @@
                         {% csrf_token %}
                         <input type="hidden" name="form_type" value="delete">
                        <input name='post_to_delete' value="{{ post.pk }}" type=hidden >
-                       <button type="submit" class="btn btn-danger btn-block">Usuń!</button>
+                       <button type="submit" class="btn btn-outline-danger btn-block">Usuń!</button>
                     </form>
                           {% endif %}
 <!--                  COMMENTS-->

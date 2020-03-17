@@ -92,3 +92,7 @@
  background-color: 5F9EA0;
 }
 
+.frame {
+ border: 2px gray double;
+ border-radius: 10%;
+}
