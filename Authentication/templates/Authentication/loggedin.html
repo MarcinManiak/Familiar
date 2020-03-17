@@ -104,7 +104,7 @@
     <!--                  COMMENTS-->
                   <br><hr>
                   <div style="max-height: 318px; overflow: hidden;">
-                  <h6><b>Komentarze:</b></h6>
+                  <h6><b>Najnowsze komentarze:</b></h6>
                       {% for comment in comments_in_my_families %}
                         {% if comment.latest_post.pk == post.pk %}
                               <b>{{ comment.author }}:</b> {{ comment.text }}<br>

@@ -58,9 +58,13 @@
 <br><br><br><br>
 
     {% if allow %}
-        {% for number in numbers_in_my_families%}
-            <h4>{{ number.author }}: {{ number.phone_number }}</h4>
-        {% endfor %}
+        <div>
+            <ul class="list-group">
+              {% for number in numbers_in_my_families%}
+                <a href="{% url 'profile' number.author %}" class="list-group-item list-group-item-action"><b>{{ number.author }}: </b> {{ number.phone_number }}</a>
+              {% endfor %}
+            </ul>
+         </div>
     {% else %}
         <h3>Aby mieć dostęp do książki telefonicznej dodaj swój numer telefonu.</h3>
         <h6>Będzie on widoczny dla członków Twojej rodziny i wykorzystany wyłącznie w tym celu :)</h6>
