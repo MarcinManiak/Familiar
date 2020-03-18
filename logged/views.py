@@ -15,39 +15,53 @@ def Addevent(request):
         desc = request.POST['desc']
         day = request.POST['day']
         month = request.POST['month']
+        author = request.user.username
+        my_events = Event.objects.filter(author=author)
 
         new_event = Event(author=author,occasion=occasion, desc=desc,day=day,month=month)
         new_event.save()
+        msg = 'Dodano wydarzenie'
 
-        return redirect('myevents')
+        return render(request, 'logged/myevents.html', {'my_events':my_events,'msg':msg})
 
 @login_required
 def Myevents(request):
     if request.method=='GET':
         author = request.user.username
         my_events = Event.objects.filter(author=author)
-        return render(request, 'logged/myevents.html', {'my_events':my_events})
+        msg = False
+        return render(request, 'logged/myevents.html', {'my_events':my_events,'msg':msg})
     elif request.method == 'POST':
+        author = request.user.username
+        my_events = Event.objects.filter(author=author)
         event = request.POST['event_id']
         event_to_delete = get_object_or_404(Event, pk=event)
         event_to_delete.delete()
-
-        return redirect('logedin')
+        msg = 'Wydarzenie usunięto'
+        return render(request, 'logged/myevents.html', {'my_events':my_events,'msg':msg})
 
 @login_required
 def Photos(request):
     if request.method=='GET':
         user = request.user.username
         photos = Photo.objects.filter(author=user)
-        return render(request, 'logged/photos.html', {'photos':photos, 'img_form':ImageForm()})
+        msg=False
+        return render(request, 'logged/photos.html', {'photos':photos, 'img_form':ImageForm(),'msg':msg})
 
     elif request.method == 'POST':
         if request.POST.get('form_type') == 'delete_photo':
             photo_to_delete = get_object_or_404(Photo, pk=request.POST['photo_id'])
             if photo_to_delete.author == request.user.username:
+                user = request.user.username
+                photos = Photo.objects.filter(author=user)
                 photo_to_delete.delete()
-            return redirect('photos')
+                msg = 'Zdjęcie usunięte'
+
+                return render(request, 'logged/photos.html', {'photos':photos, 'img_form':ImageForm(),'msg':msg})
+
         elif request.POST.get('form_type') == 'add_photo':
+            user = request.user.username
+            photos = Photo.objects.filter(author=user)
             author = request.user.username
             title = request.POST['title']
             desc = request.POST['desc']
@@ -56,8 +70,9 @@ def Photos(request):
             new_photo = Photo(author=author, title=title,desc=desc, photo=photo)
             #zrobić is valid!
             new_photo.save()
+            msg = 'Zdjęcie dodane - sprawdź na dole strony'
 
-            return redirect('photos')
+            return render(request, 'logged/photos.html', {'photos':photos, 'img_form':ImageForm(),'msg':msg})
 
 @login_required
 def Phonebook(request):
