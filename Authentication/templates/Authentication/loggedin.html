@@ -91,10 +91,10 @@
             <div class="card border-dark mb-3 shadow p-3 mb-5 bg-white rounded" style="max-width: 25rem;">
               <div class="card-header">Dodane: {{latest_post.date |date:"m.d.Y - h:i"}}</div>
               <div class="card-body text-dark">
-                <h5 class="card-title">{{ latest_post.author }}</h5>
+                  <h5 class="card-title"><b>{{ latest_post.author }}</b></h5>
                 <p class="card-text">{{ latest_post.text }}.</p>
                   <!--                            delete post-->
-                  {% if latest_post.username == user.username %}
+                  {% if latest_post.author == user.username %}
                     <form method="POST">
                         {% csrf_token %}
                         <input type="hidden" name="form_type" value="delete">
@@ -122,9 +122,9 @@
     {% if latest_photo %}
     <div style="padding:2vw; min-width:300px; max-width:30vw;">
         <h3>Najnowsze zdjęcie:</h3><br>
-        <div class="shadow">
+        <div class="shadow rounded">
                 <img class="card-img-top" src="{{ latest_photo.photo.url }}" alt="Card image cap">
-                <div class="card-body bg-white">
+                <div class="card-body bg-white rounded">
                   <h5 class="card-title">{{ latest_photo.author }}: {{ latest_photo.title }}</h5>
                   <p class="card-text">{{ latest_photo.desc }}</p>
                   <p class="card-text"><small class="text-muted">Dodane: {{latest_photo.date |date:"m.d.Y - h:i"}}</small></p>
@@ -160,7 +160,7 @@
                 <div class="card border-dark shadow p-3 bg-white rounded" style="max-width: 25rem; margin:1.5vw; min-width: 350px; max-height: 70vh; overflow: auto">
                   <div class="card-header">Dodane: {{post.date |date:"m.d.Y - h:i"}}</div>
                   <div class="card-body text-dark" >
-                    <h5 class="card-title">{{ post.author }}</h5>
+                      <h5 class="card-title"><b>{{ post.author }}</b></h5>
                     <p class="card-text">{{ post.text }}.</p>
                       <!--                            delete post-->
                       {% if post.author == user.username %}
