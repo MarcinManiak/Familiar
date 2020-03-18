@@ -134,6 +134,7 @@
 }
 
 .scrollbar {
+
     color:red;
     ::-webkit-scrollbar {
       width: 13px;

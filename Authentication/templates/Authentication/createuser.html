@@ -36,6 +36,12 @@
             <p style="color: red">Hasło jest zbyt powszechne, wymyśl proszę coś bardziej skomplikowanego.</p>
           {% elif error == 'The two password fields didn’t match.' %}
             <p style="color: red">Podane hasła różnią się. Spróbuj jeszcze raz.</p>
+          {% elif error == 'A user with that username already exists.' %}
+            <p style="color: red">Użytkownik o tej nazwie już istnije. Proszę wybierz inną nazwę.</p>
+          {% elif error == 'Enter a valid email address.' %}
+            <p style="color: red">Podaj poprawny adres e-mail.</p>
+          {% elif error %}
+            {{ error }}
           {% endif %}
         {% endfor %}
       </p>
