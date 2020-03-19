@@ -1,4 +1,5 @@
-from django.shortcuts import render
+import random
+import string
 import datetime
 from operator import attrgetter
 from django.contrib.auth import login, authenticate, logout
@@ -92,7 +93,7 @@ def Logedin(request):
                                                                   event_in_family.month)
 
         sorted_events = sorted(events_in_my_families, key=attrgetter('this_year'))
-        two_events = sorted_events.copy()[:2]
+        two_events = sorted_events.copy()[:3]
         how_much_events = len(sorted_events)
 
 
@@ -180,6 +181,11 @@ def Logoutuser(request):
         logout(request)
         return redirect('home')
 
+def randomStringDigits(stringLength=6):
+    """Generate a random string of letters and digits """
+    lettersAndDigits = string.ascii_letters + string.digits
+    return ''.join(random.choice(lettersAndDigits) for i in range(stringLength))
+
 @login_required
 def Createfamily(request):
     if request.method == 'GET':
@@ -195,8 +201,10 @@ def Createfamily(request):
         name = request.POST['name']
         description = request.POST['description']
         newfamily = Family(name=name, description=description)
+        newfamily.save()
 
 
+        newfamily.password = str(randomStringDigits(4)+str(int((int(newfamily.pk)*3-2)/2)))
         newfamily.save()
         newfamily.members.add(new_member)
 
@@ -214,8 +222,8 @@ def Joinfamily(request):
             new_member = Member(member=member)
             new_member.save()
 
-        pk = request.POST['family_id']
-        family = get_object_or_404(Family, pk=pk)
+        password = request.POST['family_id']
+        family = get_object_or_404(Family, password=password)
         family.members.add(new_member)
         family.save()
 

@@ -6,14 +6,15 @@
 <div class="back-myfamilies" style="margin-top:10vh; background-image: url( {% static 'Authentication/img/doodle5.png' %})">
     <h2 style="margin:3vh">Jesteś członkiem {{ number_of_families }} rodzin/y:</h2>
     <br>
-    <div class="d-flex justify-content-around flex-wrap">
+    <div class="d-inline-block">
 {% for family in my_families %}
-        <div style="text-align: center;margin:3vh; min-width:400px;padding:2%;border-radius:3%;" class="bg-white">
-            <h3>{{ family.name }}</h3>
-                <h5>ID rodziny: <b>{{ family.pk }}</b></h5>
+        <div style="text-align: center;margin-left: 30vw; width:40vw;padding:2%;border-radius:3%;" class="bg-white shadow card">
+            <h3 class="text-primary">{{ family.name }}</h3>
+                <h5>ID rodziny: <b>{{ family.password }}</b></h5>
                 <p>{{ family.description }}</p>
             <button onclick="ShowMembers({{ family.pk }})" class="btn btn-light"><b>Członkowie rodziny   </b><span class="badge badge-primary badge-pill"> {{ family.count_members }}</span></button>
-                <ul id="{{ family.pk }}" style="display: none;S">
+                <ul id="{{ family.pk }}" style="display: none;list-style-type: none;">
+                    <br>
                     {% for member in family.members.all %}
                     <li>
                        <a href="{% url 'profile' member %}" class="badge badge-light">{{ member }}</a>
@@ -26,8 +27,19 @@
                     <button type="submit" class="btn btn-danger">Opuść rodzinę!</button>
                 </form>
         </div>
+                <br><br>
 {% endfor %}
     </div>
 </div>
+
+<script>
+function ShowMembers(id) {
+    list = document.getElementById(id)
+    if (list.style.display === 'block') {
+        list.style.display = 'none'}
+    else {
+    list.style.display = 'block'}
+}
+</script>
 
 {% endblock %}

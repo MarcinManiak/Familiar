@@ -1,7 +1,7 @@
 {% extends 'Authentication/base.html' %}
 
 {% block content %}
-
+{% load static %}
 {% load filters %}
 
 <div class="back-register" style="background-image: url( {% static 'Authentication/img/kwiaty.png' %})">
@@ -40,6 +40,8 @@
             <p style="color: red">Użytkownik o tej nazwie już istnije. Proszę wybierz inną nazwę.</p>
           {% elif error == 'Enter a valid email address.' %}
             <p style="color: red">Podaj poprawny adres e-mail.</p>
+          {% elif error == 'User with this Email address already exists.' %}
+            <p style="color: red">Adress email został już wykorzystany. Podaj inny.</p>
           {% elif error %}
             {{ error }}
           {% endif %}

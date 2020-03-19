@@ -1,7 +1,7 @@
 {% extends 'Authentication/base.html' %}
 
 {% block content %}
-
+{% load static %}
 {% load filters %}
 
 <div class="back back-login center" style="background-image: url( {% static 'Authentication/img/domek.png' %})">
@@ -10,7 +10,7 @@
   <form method="post">
     {% csrf_token %}
     {% if error != None%}
-        {{ error }}
+        <h6 class="text-danger">{{ error }}</h6>
     {% endif %}
     {% for field in form %}
       <br>
@@ -27,7 +27,7 @@
           {% endif %}
         {% endif %}
         {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
+          <p class="text-danger">{{ error }}</p>
         {% endfor %}
       </p>
     {% endfor %}

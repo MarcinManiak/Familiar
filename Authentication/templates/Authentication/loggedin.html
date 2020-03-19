@@ -71,15 +71,14 @@
         {% for event in two_events %}
             <div class="card shadow-sm p-2 mb-1 bg-white rounded">
               <div class="card-body">
-                <h3 class="card-title"> {{ event.author }} </h3>
-                <h5 class="card-title"> {{ event.occasion|upper }}</h5>
-                <h5 class="card-title"> {{ event.day }} {{event.month|month}}</h5>
+                <h3 class="card-title text-primary"> {{ event.author }} </h3>
+                <h5 class="card-title text-date"> {{ event.occasion|title }}: {{ event.day }} {{event.month|month}}</h5>
                 <p class="card-text">{{ event.desc }}</p>
               </div>
             </div>
             <br>
             {% endfor %}
-        {% if how_much_events >= 3%}
+        {% if how_much_events >= 4%}
             <button class="btn btn-outline-primary btn-block" type="button" onclick="ShowEvents()">Pokaż więcej</button>
         {% endif %}
     </div>
@@ -89,9 +88,9 @@
     <div id="latest_post" style="padding:2vw; min-width:400px; max-width:35vw;">
         <h3>Najnowszy post:</h3><br>
             <div class="card border-dark mb-3 shadow p-3 mb-5 bg-white rounded" style="max-width: 25rem;">
-              <div class="card-header">Dodane: {{latest_post.date |date:"m.d.Y - h:i"}}</div>
+              <div class="card-header bg-dark text-light">Dodane: {{latest_post.date |date:"m.d.Y - h:i"}}</div>
               <div class="card-body text-dark">
-                  <h5 class="card-title"><b>{{ latest_post.author }}</b></h5>
+                  <h5 class="card-title text-primary"><b>{{ latest_post.author }}</b></h5>
                 <p class="card-text">{{ latest_post.text }}.</p>
                   <!--                            delete post-->
                   {% if latest_post.author == user.username %}
@@ -109,7 +108,7 @@
                   <h6><b>Najnowsze komentarze:</b></h6>
                       {% for comment in comments_in_my_families %}
                         {% if comment.latest_post.pk == post.pk %}
-                              <b>{{ comment.author }}:</b> {{ comment.text }}<br>
+                              <b class="text-primary">{{ comment.author }}:</b> {{ comment.text }}<br>
                         {% endif %}
                       {% endfor %}
                   </div>
@@ -125,7 +124,7 @@
         <div class="shadow rounded">
                 <img class="card-img-top" src="{{ latest_photo.photo.url }}" alt="Card image cap">
                 <div class="card-body bg-white rounded">
-                  <h5 class="card-title">{{ latest_photo.author }}: {{ latest_photo.title }}</h5>
+                  <h5 class="card-title text-primary">{{ latest_photo.author }}: {{ latest_photo.title }}</h5>
                   <p class="card-text">{{ latest_photo.desc }}</p>
                   <p class="card-text"><small class="text-muted">Dodane: {{latest_photo.date |date:"m.d.Y - h:i"}}</small></p>
                 </div>
@@ -134,13 +133,15 @@
     {% endif %}
     </div>
 </div>
+<hr>
 <div class="d-inline-flex back-logged" style="background-image: url( {% static 'Authentication/img/doodle5.png' %})">
 
     <div class="" id="posts">
         <div class="d-inline-flex" style="text-align:center;">
-            <h2>Posty</h2>
+            <h2 style="margin-left:3vh;">Posty</h2>
         </div>
         <div>
+            <br>
     <div class="d-inline-flex shadow bg-white rounded scrollbar" style="max-width: 97.7vw; overflow: scroll; overflow-y: hidden; margin-left:1.5%;margin-right:1.5%;">
                          <!--    CREATE POST-->
         <div class="card text-dark bg-secondary border-dark shadow p-3 rounded blacked d-inline-flex justify-content-center" style="max-width: 25rem; margin:1.5vw; min-width: 350px; max-height: 70vh; overflow: auto;text-align:center;">
@@ -158,9 +159,9 @@
             {% if posts_in_my_families %}
                 {% for post in posts_in_my_families %}
                 <div class="card border-dark shadow p-3 bg-white rounded" style="max-width: 25rem; margin:1.5vw; min-width: 350px; max-height: 70vh; overflow: auto">
-                  <div class="card-header">Dodane: {{post.date |date:"m.d.Y - h:i"}}</div>
+                  <div class="card-header bg-dark text-light">Dodane: {{post.date |date:"m.d.Y - h:i"}}</div>
                   <div class="card-body text-dark" >
-                      <h5 class="card-title"><b>{{ post.author }}</b></h5>
+                      <h5 class="card-title text-primary"><b>{{ post.author }}</b></h5>
                     <p class="card-text">{{ post.text }}.</p>
                       <!--                            delete post-->
                       {% if post.author == user.username %}
@@ -177,7 +178,7 @@
                           <h6>Komentarze:</h6>
                           {% for comment in comments_in_my_families %}
                             {% if comment.post.pk == post.pk%}
-                                  <b>{{ comment.author }}:</b> {{ comment.text }}<br>
+                                  <b class="text-primary">{{ comment.author }}:</b> {{ comment.text }}<br>
                                     {% if comment.author == user.username %}
                                         <form method="POST">
                                         {% csrf_token %}
@@ -204,20 +205,22 @@
                 </div>
                      {% endfor %}
             {% else %}
-            <h2>Nikt z Twoich rodzin nie dodał jeszcze posta, bądź pierwszy!</h2>
+            <h2 style="text-align: center;margin-top:10%;">Nikt z Twoich rodzin nie dodał jeszcze posta, bądź pierwszy!</h2>
             {% endif %}
         </div>
+                        <hr>
         <div style="margin-top: 5vh">
-            <h2>Zdjęcia</h2>
+            <h2 style="margin-left:3vh;">Zdjęcia</h2>
+            <br>
             <!--    PHOTOS-->
             {% if photos_in_my_families %}
-                <div style="max-height:70vh;overflow:scroll;overflow-x: hidden; margin-left:1.5%;margin-right:1.5%;" class="bg-white shadow rounded"t>
+                <div style="max-height:85vh;overflow:scroll;overflow-x: hidden; margin-left:1.5%;margin-right:1.5%;" class="bg-white shadow rounded"t>
                     <div class="row justify-content-md-center">
                         {% for photo in photos_in_my_families %}
                       <div class="card col-sm-3 shadow-sm p-3 mb-5 bg-white rounded" style="margin:0.8em">
                         <img class="card-img-top" src="{{ photo.photo.url }}" alt="Card image cap">
                         <div class="card-body bg-white">
-                          <h5 class="card-title">{{ photo.author }}: {{ photo.title }}</h5>
+                          <h5 class="card-title text-primary">{{ photo.author }}: {{ photo.title }}</h5>
                           <p class="card-text">{{ photo.desc }}</p>
                           <p class="card-text"><small class="text-muted">Dodane: {{photo.date |date:"m.d.Y - h:i"}}</small></p>
                         </div>
@@ -252,12 +255,12 @@
         function ShowEvents() {
         EventDIV = document.getElementById('events')
         EventDIV.style.width = '100vw'
-        EventDIV.innerHTML = '<h3>Nadchodzące wydarzenia:</h3><br><div class="d-flex flex-wrap justify-content-around">{% for event in events_in_my_families %}<div class="card shadow-sm p-2 mb-1 bg-white rounded"><div class="card-body"><h3 class="card-title"> {{ event.author }} </h3><h5 class="card-title"> {{ event.occasion|upper }}</h5><h5 class="card-title"> {{ event.day }} {{event.month|month}}</h5><p class="card-text">{{ event.desc }}</p></div></div><br>{% endfor %}</div><br><button class="btn btn-outline-primary btn-block" type="button" onclick="HideEvents()">Pokaż Mniej</button>'}
+        EventDIV.innerHTML = '<h3>Nadchodzące wydarzenia:</h3><br><div class="d-flex flex-wrap justify-content-around">{% for event in events_in_my_families %}<div class="card shadow-sm p-2 mb-1 bg-white rounded"><div class="card-body"><h3 class="card-title text-primary"> {{ event.author }} </h3><h5 class="card-title text-date"> {{ event.occasion|title }}: {{ event.day }} {{event.month|month}}</h5><p class="card-text">{{ event.desc }}</p></div></div><br>{% endfor %}</div><br><button class="btn btn-outline-primary btn-block" type="button" onclick="HideEvents()">Pokaż Mniej</button>'}
 
      function HideEvents() {
             EventDIV = document.getElementById('events')
             EventDIV.style.width = '30vw'
-            EventDIV.innerHTML = '<h3>Nadchodzące wydarzenia:</h3><br>{% for event in two_events %}<div class="card shadow-sm p-2 mb-1 bg-white rounded"><div class="card-body"><h3 class="card-title"> {{ event.author }} </h3><h5 class="card-title"> {{ event.occasion|upper }}</h5><h5 class="card-title"> {{ event.day }} {{event.month|month}}</h5><p class="card-text">{{ event.desc }}</p></div></div><br>{% endfor %}<button class="btn btn-outline-primary btn-block" type="button" onclick="ShowEvents()">Pokaż więcej</button>'}
+            EventDIV.innerHTML = '<h3>Nadchodzące wydarzenia:</h3><br>{% for event in two_events %}<div class="card shadow-sm p-2 mb-1 bg-white rounded"><div class="card-body"><h3 class="card-title text-primary text-primary text-primary"> {{ event.author }} </h3><h5 class="card-title text-date">{{ event.occasion|title }}: {{ event.day }} {{event.month|month}}</h5><p class="card-text">{{ event.desc }}</p></div></div><br>{% endfor %}<button class="btn btn-outline-primary btn-block" type="button" onclick="ShowEvents()">Pokaż więcej</button>'}
     </script>
 
 {% endblock %}

@@ -22,7 +22,7 @@
             <ul class="list-group center-form shadow">
               <li class="list-group-item active">Numery telefonów członków Twoich rodziny:</li>
               {% for number in numbers_in_my_families%}
-                <a href="{% url 'profile' number.author %}" class="list-group-item list-group-item-action"><b>{{ number.author }}: </b> {{ number.phone_number }}</a>
+                <a href="{% url 'profile' number.author %}" class="list-group-item list-group-item-action"><b class="text-primary">{{ number.author }}: </b> {{ number.phone_number }}</a>
               {% endfor %}
             </ul>
          </div>

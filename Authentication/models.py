@@ -11,7 +11,7 @@ class Family(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True, help_text='Opcjonalne, ale na pewno czym szczególnym się odznaczacie :) ')
     members = models.ManyToManyField(Member)
-
+    password = models.CharField(max_length=128, blank=True)
 
     def count_members(self):
         return len(self.members.all())
