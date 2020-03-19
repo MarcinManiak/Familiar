@@ -53,8 +53,10 @@
 {% if not my_families%}
 <br><br><br><br>
 <div class="center-form" style="text-align:center;">
-<h2>Czas dołączyć do jakiejś rodziny</h2> <br>
-<h6>Stwórz jako pierwszy swoją rodzię lub poproś osobę która zaprosiła Cię do Familiara o ID rodziny do której chciałbyś dołączyć.</h6><br><br>
+<h2>Czas dołączyć do jakiejś rodziny.</h2> <br>
+<h5>Na początek możesz dołączyć do rodziny Testowi, aby zobaczyć jak działa Familiar. Jej ID to 0.</h5>
+    <br>
+<h6>Ewentualnie możesz już teraz stworzyć swoją rodzinę lub poprosić osobę która zaprosiła Cię do Familiara o ID rodziny do której chciałbyś dołączyć.</h6><br><br>
     <a href="{% url 'createfamily'%}" class="btn btn-primary">Stwórz rodzinę</a>
     <a href="{% url 'joinfamily'%}" class="btn btn-primary">Dołącz do istniejące rodziny</a><br>
 </div>
@@ -197,7 +199,7 @@
                            <input type="hidden" name="form_type" value="form_comment">
                            <input type="hidden" name="commented_post" value="{{ post.pk }}">
                            <textarea name='comment' id='comment' rows="2" cols="30" class="form-control"></textarea>
-                           <button type="submit" class="btn btn-success">Skomentuj!</button>
+                           <button type="submit" class="btn btn-success" style="margin-top:10px;margin-bottom:10px;">Skomentuj!</button>
                         </form>
 
 
