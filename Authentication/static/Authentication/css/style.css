@@ -27,7 +27,7 @@
   padding-top:5vh;
   background-size: 30%;
   background-repeat: repeat;
-  background-image: url('./../img/kwiaty.png')
+/*  background-image: url('./../img/kwiaty.png')*/
 }
 
 .back-createfamily {
@@ -36,7 +36,7 @@
   background-size: contain;
   text-align: center;
   padding-top:10vh;
-  background-image: url('./../img/doodle3.png');
+/*  background-image: url('./../img/doodle3.png');*/
 }
 
 .back-joinfamily {
@@ -45,7 +45,7 @@
   background-size: cover;
   text-align: center;
   padding-top:30vh;
-  background-image: url('./../img/doodle3.png');
+/*  background-image: url('./../img/doodle3.png');*/
 }
 
 .back-addevent {
@@ -54,7 +54,7 @@
   background-size: cover;
   text-align: center;
   padding-top:8vh;
-  background-image: url('./../img/doodle3.png');
+/*  background-image: url('./../img/doodle3.png');*/
 }
 
 .back-home {
@@ -65,13 +65,13 @@
   padding-top:20vh;
   background-position: -20% 0 ;
   background-size: 20%;
-  background-image: url('./../img/home2.png')
+/*  background-image: url('./../img/home2.png')*/
 }
 
 .back-login {
   background-size: 20%;
   background-repeat: repeat;
-  background-image: url('./../img/domek.png');
+/*  background-image: url('./../img/domek.png');*/
 }
 
 
@@ -98,39 +98,39 @@
 }
 
 .back-logged {
- background-image: url('./../img/doodle5.png');
+/* background-image: url('./../img/doodle5.png');*/
  background-repeat: repeat;
  background-size: 30%;
 }
 
-.bg-nav {
+/*.bg-nav {
  background-image: url('./../img/doodle-nav.png');
  background-size: contain;
  background-repeat: repeat;
-}
+}*/
 
 .back-myfamilies {
   width: 100wv;
   min-height: 90vh;
- background-image: url('./../img/doodle5.png')
+/* background-image: url('./../img/doodle5.png')*/
 }
 
 .back-myevents {
   width: 100wv;
   min-height: 90vh;
- background-image: url('./../img/doodle5.png')
+/* background-image: url('./../img/doodle5.png')*/
 }
 
 .back-photos {
   width: 100wv;
   min-height: 90vh;
- background-image: url('./../img/doodle5.png')
+/* background-image: url('./../img/doodle5.png')*/
 }
 
 .back-phone {
   width: 100wv;
   min-height: 90vh;
- background-image: url('./../img/doodle5.png')
+/* background-image: url('./../img/doodle5.png')*/
 }
 
 .fa {

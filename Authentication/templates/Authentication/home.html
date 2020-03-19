@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="back-home align-middle">
+<div class="back-home align-middle" style="background-image: url( {% static 'Authentication/img/home2.png' %})">
   <h1>Witaj w Familiar</h1><br><br>
 
   {% if user.is_authenticated %}

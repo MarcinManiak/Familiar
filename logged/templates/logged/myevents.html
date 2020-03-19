@@ -63,7 +63,7 @@
 
     {% load filters %}
 
-<div class="back-myevents">
+<div class="back-myevents" style="background-image: url( {% static 'Authentication/img/doodle5.png' %})">
     <h2 style="margin:3vh">Twoje wydarzenia:</h2>
     {% if msg == 'Wydarzenie usunięto' %}
         <h2 class="text-danger" style="text-align:center;">{{ msg }}</h2>
