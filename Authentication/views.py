@@ -212,8 +212,9 @@ def Createfamily(request):
 
 @login_required
 def Joinfamily(request):
+    error = None;
     if request.method == 'GET':
-        return render(request, 'Authentication/joinfamily.html')
+        return render(request, 'Authentication/joinfamily.html',{"error":error})
     elif request.method == 'POST':
         member = request.user.username
         try:
@@ -223,7 +224,11 @@ def Joinfamily(request):
             new_member.save()
 
         password = request.POST['family_id']
-        family = get_object_or_404(Family, password=password)
+        try:
+            family = get_object_or_404(Family, password=password)
+        except:
+            error='Rodzina o podanym ID nie istnieje.'
+            return render(request, 'Authentication/joinfamily.html',{"error":error})
         family.members.add(new_member)
         family.save()
 
